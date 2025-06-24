@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Klik Billiard Admin</title>
 
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/feather/feather.css') }}">
@@ -27,10 +27,11 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 </head>
+
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-   @include('partials.navbar')
+    @include('partials.navbar')
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -40,8 +41,12 @@
         <div id="theme-settings" class="settings-panel">
           <i class="settings-close ti-close"></i>
           <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+            <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+          </div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+          </div>
           <p class="settings-heading mt-2">HEADER SKINS</p>
           <div class="color-tiles mx-0 px-4">
             <div class="tiles success"></div>
@@ -216,7 +221,7 @@
         <!-- content-wrapper ends -->
 
         <!-- partial:partials/_footer.html -->
-       @include('partials.footer')
+        @include('partials.footer')
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -241,6 +246,7 @@
   <script src="{{ asset('assets/js/template.js') }}"></script>
   <script src="{{ asset('assets/js/settings.js') }}"></script>
   <script src="{{ asset('assets/js/todolist.js') }}"></script>
+  <script src="{{ asset('assets/js/file-upload.js') }}"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page -->
@@ -253,6 +259,7 @@
   <script src="{{ asset('assets/js/template.js') }}"></script>
   <script src="{{ asset('assets/js/settings.js') }}"></script>
   <script src="{{ asset('assets/js/todolist.js') }}"></script>
+  <script src="{{ asset('assets/js/file-upload.js') }}"></script>
   <!-- endinject -->
 
   <!-- Custom js for this page-->
@@ -262,8 +269,8 @@
   <!-- Custom js for this page-->
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
   <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>
+  @stack('scripts')
   <!-- End custom js for this page-->
 </body>
 
 </html>
-

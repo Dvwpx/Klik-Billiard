@@ -1,0 +1,96 @@
+@extends('layouts.main')
+
+@section('content')
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Form Edit Lokasi</h4>
+            <p class="card-description">
+                Ubah detail lokasi billiard untuk Klik Billiard.
+            </p>
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            <form class="forms-sample" method="POST" action="{{ route('locations.update', $location->id) }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label for="name">Nama Lokasi</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lokasi" value="{{ old('name', $location->name) }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Alamat Lengkap</label>
+                    <textarea class="form-control" id="address" name="address" rows="4" placeholder="Alamat lengkap">{{ old('address', $location->address) }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Kota</label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Kota" value="{{ old('city', $location->city) }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gambar Utama</label>
+                    <input type="file" name="featured_image" class="file-upload-default">
+                    <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Gambar Baru (Opsional)">
+                        <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                        </span>
+                    </div>
+                    @if($location->featured_image)
+                    <div class="mt-2">
+                        <p>Gambar saat ini:</p>
+                        <img src="{{ asset('storage/' . $location->featured_image) }}" alt="Featured Image" style="max-width: 200px;">
+                    </div>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Deskripsi</label>
+                    <textarea class="form-control" id="description" name="description" rows="8">{{ old('description', $location->description) }}</textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="latitude">Latitude</label>
+                            <input type="text" class="form-control" id="latitude" name="latitude" value="{{ old('latitude', $location->latitude) }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="longitude">Longitude</label>
+                            <input type="text" class="form-control" id="longitude" name="longitude" value="{{ old('longitude', $location->longitude) }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone_number">Nomor Telepon</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $location->phone_number) }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="open" {{ old('status', $location->status) == 'open' ? 'selected' : '' }}>Open</option>
+                        <option value="closed" {{ old('status', $location->status) == 'closed' ? 'selected' : '' }}>Closed</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Update</button>
+                <a href="{{ route('locations.index') }}" class="btn btn-light">Batal</a>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

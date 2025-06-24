@@ -1,66 +1,109 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\LocationsController;
+use App\Http\Controllers\Frontend\TournamentsController;
+use App\Http\Controllers\Frontend\FacilitysController;
+use App\Http\Controllers\Frontend\MenuItemsController;
+use App\Http\Controllers\Frontend\PlayersController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Rute untuk Pengunjung (Frontend)
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// RUTE HOMEPAGE
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-});
+// RUTE UNTUK ABOUTT
+Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
 
-Route::get('/forms', function () {
-    return view('pages.forms.index');
-});
+// Halaman untuk menampilkan semua artikel
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
-Route::get('/buttons', function () {
-    return view('pages.ui-features.buttons.index');
-});
+// Halaman untuk menampilkan satu artikel berdasarkan slug-nya
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/dropdowns', function () {
-    return view('pages.ui-features.dropdowns.index');
-});
+// RUTE UNTUK MENAMPILKAN SEMUA LOKASI
+Route::get('/lokasi', [LocationsController::class, 'index'])->name('locations.public.index');
+Route::get('/lokasi/{slug}', [LocationsController::class, 'show'])->name('locations.public.show');
 
-Route::get('/typography', function () {
-    return view('pages.ui-features.typography.index');
-});
+// RUTE BARU PEMAIN
+Route::get('/pemain', [PlayerController::class, 'index'])->name('players.public.index');
+Route::get('/pemain/{slug}', [PlayerController::class, 'show'])->name('players.public.show');
 
-Route::get('/chart', function () {
-    return view('pages.chart.index');
-});
+// RUTE UNTUK MENAMPILKAN TURNAMEN
+Route::get('/turnamen', [TournamentsController::class, 'index'])->name('tournaments.public.index');
+Route::get('/turnamen/{slug}', [TournamentsController::class, 'show'])->name('tournaments.public.show');
 
-Route::get('/table', function () {
-    return view('pages.table.index');
-});
+// RUTE UNTUK MENAMPILKAN FASILITAS
+Route::get('/fasilitas', [FacilitysController::class, 'index'])->name('facilities.public.index');
+Route::get('/fasilitas/kategori/{category}', [FacilitysController::class, 'byCategory'])->name('facilities.public.byCategory');
 
-Route::get('/icons', function () {
-    return view('pages.icons.index');
-});
+// RUTE UNTUK MENAMPILKAN MENU
+Route::get('/menu', [MenuItemsController::class, 'index'])->name('menu.public.index');
 
-Route::get('/login', function () {
-    return view('pages.user-pages.login.index');
-});
 
-Route::get('/register', function () {
-    return view('pages.user-pages.register.index');
-});
 
-Route::get('/erro404', function () {
-    return view('pages.error-pages.404.index');
-});
 
-Route::get('/erro500', function () {
-    return view('pages.error-pages.500.index');
+
+
+/*
+|--------------------------------------------------------------------------
+| Rute untuk Admin (Backend)
+|--------------------------------------------------------------------------
+*/
+
+// Rute untuk menampilkan halaman login
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+
+// Rute untuk memproses data login
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+
+// Rute untuk logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+// Grup rute yang hanya bisa diakses setelah login
+Route::middleware(['auth'])->group(function () {
+
+
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    })->name('dashboard');
+
+    // Rute resource untuk User
+    Route::resource('users', UserController::class);
+
+    // RUTE UNTUK ARTIKEL
+    Route::resource('articles', ArticleController::class);
+
+    // RUTE UNTUK LOKASI
+    Route::resource('locations', LocationController::class);
+
+    // RUTE UNTUK PEMAIN
+    Route::resource('players', PlayerController::class);
+
+    // RUTE UNTUK TURNAMEN
+    Route::resource('tournaments', TournamentController::class);
+
+    // RUTE UNTUK FASILITAS
+    Route::resource('facilities', FacilityController::class);
+
+    // RUTE UNTUK MENU ITEM    
+    Route::resource('menu-items', MenuItemController::class);
 });

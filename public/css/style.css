@@ -1,0 +1,1245 @@
+/* ===================================================================
+   KLIK BILLIARD - STYLE
+   =================================================================== */
+
+/* 1. Variabel & Fondasi Dasar
+------------------------------------------------------------------- */
+:root {
+    --primary-color: #0D99FF; /* Biru cerah yang modern */
+    --secondary-color: #F7B801; /* Emas sebagai aksen */
+    --dark-color: #121212; /* Hitam pekat untuk kesan premium */
+    --dark-grey: #222222;
+    --light-grey: #f8f9fa;
+    --text-color: #adb5bd;
+    --heading-font: 'Montserrat', sans-serif;
+    --body-font: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--dark-color);
+    color: var(--text-color);
+    line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    color: #ffffff;
+}
+
+a {
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-family: var(--heading-font);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #0a7dd1;
+    border-color: #0a7dd1;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(13, 153, 255, 0.3);
+}
+
+/* 2. Header & Navigasi
+------------------------------------------------------------------- */
+.navbar-custom {
+    background-color: rgba(18, 18, 18, 0.8) !important; /* Semi transparan */
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 900;
+    font-size: 2.0rem;
+    color: #ffffff !important;
+}
+
+.navbar-custom .navbar-brand span {
+    color: var(--primary-color);
+}
+
+.navbar-custom .nav-link {
+    color: #ffffff !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin: 0 10px;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.navbar-custom .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover::after,
+.navbar-custom .nav-item.active .nav-link::after {
+    width: calc(100% - 20px);
+}
+
+.navbar-custom > .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between; /* Properti ini kuncinya */
+}
+
+/* 3. Homepage Styling
+------------------------------------------------------------------- */
+.main-content {
+    background-color: var(--dark-color);
+}
+.section-title {
+    font-weight: 800;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 2rem;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+}
+
+/* Hero Section with Video */
+.hero-section-video {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#bgvideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: -99;
+}
+.hero-content {
+    z-index: 1;
+}
+.hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+.hero-content p.lead {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    max-width: 600px;
+    margin: 1rem auto 2rem auto;
+}
+
+/* Article Card v2 */
+.article-card-v2 {
+    background: var(--dark-grey);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #333;
+}
+.article-card-v2:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+.article-card-img-container {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+.article-card-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.article-card-v2:hover img {
+    transform: scale(1.05);
+}
+.article-card-category {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.article-card-body {
+    padding: 1.5rem;
+}
+.article-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* 4. Blog Page Styling
+------------------------------------------------------------------- */
+.page-header-v2 {
+    padding: 120px 0 60px 0;
+    background-color: var(--dark-grey);
+    text-align: center;
+    border-bottom: 1px solid #333;
+}
+.page-header-v2 h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+}
+
+/* Pagination for Dark Theme */
+.pagination .page-item .page-link {
+    background-color: var(--dark-grey);
+    border-color: #333;
+    color: var(--text-color);
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+.pagination .page-item .page-link:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    z-index: 3;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: transparent;
+    border-color: #333;
+    color: #555;
+}
+
+/* Single Article Page Styling */
+.article-hero {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+.article-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.article-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(18,18,18,1) 0%, rgba(18,18,18,0.5) 100%);
+}
+.article-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+.article-hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+.article-hero-content .meta {
+    font-family: var(--body-font);
+    color: var(--text-color);
+}
+
+.article-body {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+.article-content {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: var(--text-color);
+}
+.article-content h2, .article-content h3, .article-content h4 {
+    font-weight: 700;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.article-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 2rem;
+    margin: 2.5rem 0;
+    background: var(--dark-grey);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #e9ecef;
+}
+
+.related-articles-section {
+    border-top: 1px solid #333;
+    padding-top: 3rem;
+}
+
+/* 5. Location Page Styling (Lamborghini Class)
+------------------------------------------------------------------- */
+.location-hero {
+    padding: 100px 0;
+    background: var(--dark-grey);
+    text-align: center;
+}
+
+.filter-bar {
+    background: var(--dark-color);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.location-card-v2 {
+    background: var(--dark-grey);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.location-card-v2:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.location-card-v2 .img-wrapper {
+    height: 300px;
+    position: relative;
+}
+.location-card-v2 .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.location-card-v2 .img-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 50%);
+}
+
+.location-card-v2 .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1.5rem;
+    width: 100%;
+    color: #fff;
+    z-index: 2;
+}
+.location-card-v2 .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+.location-card-v2 .card-text {
+    color: var(--text-color);
+    font-weight: 500;
+}
+.location-card-v2 .card-text i {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-right: 5px;
+}
+/* Location Detail Page Styling */
+.location-detail-hero {
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    padding: 4rem 0;
+}
+.location-detail-hero .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.location-detail-hero .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(18,18,18,1) 10%, rgba(18,18,18,0.4) 60%, rgba(18,18,18,0.2) 100%);
+}
+.location-detail-hero .hero-content {
+    position: relative;
+    z-index: 2;
+}
+.location-detail-hero h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+}
+.location-detail-hero .location-city {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+}
+.location-detail-hero .location-city i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.sticky-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 120px; /* Sesuaikan dengan tinggi header + sedikit spasi */
+}
+.info-card {
+    background: var(--dark-grey);
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.info-card h4 {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.75rem;
+    display: inline-block;
+}
+.info-card .info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+.info-card .info-item i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-right: 15px;
+    margin-top: 5px;
+}
+.info-card .info-item span {
+    font-size: 1rem;
+}
+.description-box p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* 6. Tournament Page Styling (Lamborghini Class)
+------------------------------------------------------------------- */
+.tournament-card {
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--dark-grey);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+    height: 400px; /* Tinggi kartu yang seragam */
+}
+.tournament-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(13, 153, 255, 0.2);
+}
+
+.tournament-card .card-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+.tournament-card:hover .card-bg {
+    filter: brightness(0.9);
+}
+
+.tournament-card .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 40%, transparent 70%);
+    z-index: 2;
+}
+
+.tournament-card .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    z-index: 3;
+    color: #fff;
+}
+.tournament-card .tournament-status {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+.tournament-card .tournament-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+.tournament-card .tournament-date {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Tournament Detail Page Styling */
+.winner-card {
+    background: linear-gradient(135deg, var(--secondary-color), #FFC72C);
+    color: #000;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(247, 184, 1, 0.3);
+}
+.winner-card .winner-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    margin: 0 auto 1rem auto;
+    display: block;
+}
+.winner-card .winner-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+.winner-card .winner-name {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0;
+}
+
+.tournament-details .info-item i {
+    color: var(--secondary-color); /* Ganti warna ikon jadi emas */
+}
+
+/* 7. Facilities & F&B Menu Page Styling
+------------------------------------------------------------------- */
+.filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+.filter-pills .nav-link {
+    background-color: var(--dark-grey);
+    color: var(--text-color);
+    border: 1px solid #333;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.filter-pills .nav-link:hover,
+.filter-pills .nav-link.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.facility-card {
+    background: var(--dark-grey);
+    border-radius: 15px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 2rem;
+}
+.facility-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+}
+.facility-card-img-container {
+    width: 140px; /* Diperbesar dari 120px */
+    height: 140px; /* Diperbesar dari 120px */
+    margin: 0 auto 1.5rem auto;
+    background: var(--dark-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+.facility-card-img-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: inherit; /* Tambahkan baris ini */
+}
+.facility-card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+}
+.facility-card-category {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Menu F&B Page Styling */
+.menu-category-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: var(--secondary-color); /* Aksen emas untuk menu */
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.menu-item-details {
+    flex-grow: 1;
+}
+.menu-item-name {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+.menu-item-description {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.menu-item-line {
+    flex-grow: 1;
+    border-bottom: 1px dashed #444;
+    margin: 0 1rem;
+    transform: translateY(-5px);
+}
+
+.menu-item-price {
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* 8. Facilities Page Styling (Final)
+------------------------------------------------------------------- */
+
+/* TAMBAHKAN CSS BARU INI */
+.amenities-list-section {
+    background: var(--dark-color);
+    padding: 3rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.amenities-list {
+    list-style: none;
+    padding: 0;
+    column-count: 2; /* Membuat jadi 2 kolom */
+    column-gap: 2rem;
+}
+
+.amenity-list-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    break-inside: avoid-column;
+}
+
+.amenity-list-item i {
+    color: rgb(0, 255, 0); /* Warna emas/kuning */
+    font-size: 1.5rem;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+/* Responsif untuk layar kecil, buat jadi 1 kolom */
+@media (max-width: 767px) {
+    .amenities-list {
+        column-count: 1;
+    }
+}
+
+.catalog-section {
+    padding-top: 3rem;
+}
+
+.catalog-title {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #fff;
+}
+
+/* 9. F&B Menu Page Styling (Final Boss)
+------------------------------------------------------------------- */
+.menu-section {
+    padding: 4rem 0;
+}
+
+.menu-category-title-v2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #fff;
+    position: relative;
+    padding-bottom: 1rem;
+}
+.menu-category-title-v2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--secondary-color); /* Aksen Emas */
+}
+
+/* Menu F&B Page Styling (Final with Images) */
+.menu-list-item-v2 {
+    display: flex;
+    align-items: flex-start; /* Ubah ke flex-start */
+    margin-bottom: 2rem;
+    gap: 20px; /* Jarak antara gambar dan detail */
+}
+
+.menu-list-item-v2 .menu-item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0; /* Agar gambar tidak menyusut */
+}
+
+.menu-list-item-v2 .menu-item-main {
+    display: flex;
+    flex-grow: 1;
+    align-items: baseline;
+}
+
+.menu-list-item-v2 .details {
+    flex-shrink: 0;
+}
+.menu-list-item-v2 .details .name {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+.menu-list-item-v2 .details .description {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin: 0.25rem 0 0 0;
+    max-width: 80%;
+}
+.menu-list-item-v2 .line {
+    flex-grow: 1;
+    border-bottom: 2px dotted #444;
+    margin: 0 1rem;
+    position: relative;
+    bottom: 5px;
+}
+.menu-list-item-v2 .price {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+}
+
+
+/* YouTube Background Styling */
+.hero-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -100;
+    pointer-events: none; /* Penting agar tidak bisa di-klik */
+}
+
+/* Membuat iframe mengisi seluruh container */
+#youtube-player iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 177.77vh; /* 100 * 16 / 9 */
+    min-width: 100%;
+    height: 100vh;
+    min-height: 56.25vw; /* 100 * 9 / 16 */
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* 10. About Us Page Styling
+------------------------------------------------------------------- */
+.about-section-content {
+    background: var(--dark-grey);
+    padding: 3rem;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.about-section-content h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.about-section-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.contact-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.contact-list li {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.contact-list li i {
+    font-size: 1.5rem;
+    color: var(--secondary-color); /* Aksen Emas */
+    margin-right: 15px;
+    width: 25px;
+}
+
+
+/* 11. Booking Section Styling
+------------------------------------------------------------------- */
+.booking-section {
+    padding: 6rem 0;
+    background-color: var(--dark-grey);
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.booking-section .section-title::after {
+    background-color: var(--secondary-color); /* Aksen Emas */
+}
+
+.btn-whatsapp {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+.btn-whatsapp:hover {
+    background: linear-gradient(45deg, #128C7E, #25D366);
+    color: #fff !important;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+.btn-whatsapp i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* 12. Footer Styling (Final Touch)
+------------------------------------------------------------------- */
+.main-footer {
+    background-color: var(--dark-grey);
+    padding: 4rem 0 2rem 0;
+    border-top: 1px solid #333;
+}
+
+.footer-about .footer-logo {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+    display: block;
+}
+.footer-about .footer-logo span {
+    color: var(--primary-color);
+}
+.footer-about .footer-tagline {
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.footer-title {
+    position: relative;
+    font-family: var(--heading-font);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    left: 1.5rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding-left: 0;
+}
+.footer-links ul li a {
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    display: block;
+    font-weight: 500;
+}
+.footer-links ul li a:hover {
+    color: var(--primary-color);
+    padding-left: 5px;
+}
+
+.social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #333;
+    color: #fff;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+.social-icons a:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    background-color: var(--dark-color);
+    padding: 1rem 0;
+    border-top: 1px solid #444;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+.footer-bottom a {
+    color: var(--text-color);
+    margin-left: 15px;
+}
+.footer-bottom a:hover {
+    color: var(--primary-color);
+}
+
+
+
+
+/* 13. RESPONSIVE STYLING (THE FINAL TRANSFORMATION) */
+/* =================================================================== */
+
+/* Untuk Tablet dan layar di bawahnya (di bawah 992px) */
+@media (max-width: 991.98px) {
+    /* Perkecil ukuran font judul secara umum */
+    h1, .display-4 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 2rem;
+    }
+
+    /* Homepage Hero */
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+
+    /* Header Halaman */
+    .page-header-v2 {
+        padding: 80px 0 40px 0;
+    }
+    .page-header-v2 h1 {
+        font-size: 2.8rem;
+    }
+
+    /* Detail Artikel & Lokasi */
+    .article-hero, .location-detail-hero {
+        height: 50vh;
+    }
+    .article-hero-content h1, .location-detail-hero h1 {
+        font-size: 2.5rem;
+    }
+    .sticky-sidebar {
+        position: static; /* Matikan fitur sticky sidebar di tablet/HP */
+        margin-top: 2rem;
+    }
+
+    /* Kolom Footer */
+    .main-footer .col-lg-2,
+    .main-footer .col-lg-3 {
+        text-align: center !important; /* Buat rata tengah di tablet */
+    }
+    .footer-links {
+        display: inline-block;
+        text-align: left;
+    }
+}
+
+/* Untuk HP dan layar di bawahnya (di bawah 768px) */
+@media (max-width: 767.98px) {
+    /* Perkecil font header & logo */
+    .navbar-custom .navbar-brand {
+        font-size: 1.5rem;
+    }
+    .navbar-custom .nav-link {
+        font-size: 0.9rem;
+        margin: 5px 0;
+        text-align: center;
+    }
+    .navbar-custom .nav-link::after {
+        display: none; /* Sembunyikan garis bawah di menu mobile */
+    }
+    .navbar-collapse {
+        background: var(--dark-grey);
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 10px;
+    }
+
+    /* Homepage Hero */
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .hero-content p.lead {
+        font-size: 1.1rem;
+    }
+
+    /* Daftar Fasilitas Umum */
+    .amenities-list {
+        column-count: 1; /* Buat jadi 1 kolom di HP */
+    }
+
+    /* Detail Artikel & Lokasi */
+    .article-hero, .location-detail-hero {
+        height: 40vh;
+    }
+    .article-hero-content h1, .location-detail-hero h1 {
+        font-size: 2rem;
+    }
+
+    /* Footer */
+    .footer-about {
+        text-align: center;
+    }
+    .footer-bottom .col-md-6 {
+        text-align: center !important;
+    }
+    .footer-bottom .col-md-6:last-child {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Untuk layar HP yang sangat kecil (di bawah 576px) */
+@media (max-width: 575.98px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .hero-content .btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    .location-hero h1 {
+        font-size: 2rem;
+    }
+}
+
+/* ===================================================================
+   14. FINAL RESPONSIVE FOOTER FIX
+   =================================================================== */
+
+/* Aturan untuk Sosial Ikon (Tambahkan ini jika belum ada) */
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Aturan untuk Tablet (di bawah 992px) */
+@media (max-width: 991.98px) {
+    .main-footer .col-lg-4,
+    .main-footer .col-lg-2,
+    .main-footer .col-lg-3 {
+        text-align: center; /* Buat SEMUA kolom rata tengah di tablet */
+        margin-bottom: 2rem;
+    }
+
+    .footer-about .social-icons {
+        justify-content: center; /* Posisikan ikon sosial media di tengah */
+    }
+
+    .footer-links {
+        display: inline-block; /* Membuat <ul> bisa di-center */
+        text-align: left;    /* Tapi teks di dalamnya tetap rata kiri */
+    }
+}
+
+/* Aturan untuk HP (di bawah 768px) */
+@media (max-width: 767.98px) {
+    .footer-about {
+        margin-bottom: 2rem;
+    }
+
+    /* Bottom Footer */
+    .footer-bottom {
+        text-align: center;
+    }
+    .footer-bottom .col-md-6 {
+        text-align: center !important;
+    }
+    .footer-bottom .text-md-right {
+        margin-top: 0.5rem;
+    }
+}
+
+/* ===================================================================
+   FINAL RESPONSIVE OVERHAUL (ALL PAGES)
+   =================================================================== */
+
+/* Untuk Tablet dan layar di bawahnya (di bawah 992px) */
+@media (max-width: 991.98px) {
+    /* FONT */
+    h1, .display-4 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+
+    /* HERO & HEADERS */
+    .hero-content h1 { font-size: 3rem; }
+    .page-header-v2 { padding: 120px 0 40px 0; }
+    .page-header-v2 h1 { font-size: 2.8rem; }
+    .article-hero, .location-detail-hero { height: 50vh; }
+    .article-hero-content h1, .location-detail-hero h1 { font-size: 2.5rem; }
+    .location-hero { padding: 80px 0; }
+
+    /* SIDEBAR & DETAIL PAGES */
+    .sticky-sidebar { position: static; margin-top: 2rem; }
+
+    /* FOOTER */
+    .main-footer { text-align: left; } /* Kembalikan ke rata kiri di tablet */
+    .main-footer .col-lg-4, .main-footer .col-md-4 { margin-bottom: 2rem; }
+}
+
+/* Untuk HP dan layar di bawahnya (di bawah 768px) */
+@media (max-width: 767.98px) {
+    /* NAVBAR */
+    .navbar-brand { font-size: 1.5rem !important; }
+    .navbar-nav { text-align: center; }
+    .navbar-collapse { background: var(--dark-grey); padding: 1rem; margin-top: 1rem; border-radius: 10px; }
+
+    /* HERO & HEADERS */
+    .hero-content h1 { font-size: 2.2rem; }
+    .hero-content p.lead { font-size: 1.1rem; }
+    .page-header-v2 h1 { font-size: 2.2rem; }
+    .article-hero, .location-detail-hero { height: 40vh; }
+    .article-hero-content h1, .location-detail-hero h1 { font-size: 2rem; }
+
+    /* KONTEN */
+    .amenities-list { column-count: 1; }
+    .menu-list-item-v2 { flex-direction: column; align-items: flex-start; }
+    .menu-list-item-v2 .line { display: none; }
+    .menu-list-item-v2 .price { margin-top: 0.5rem; }
+    .winner-card { padding: 1.5rem; }
+    .winner-card .winner-name { font-size: 1.5rem; }
+
+    /* FOOTER (Mobile) */
+    .main-footer { text-align: center; }
+    .footer-about .social-icons { justify-content: center; }
+    .footer-links { display: inline-block; text-align: left; }
+    .footer-title { margin-top: 1.5rem; }
+    .main-footer .col-6 { margin-bottom: 2rem; }
+    .footer-bottom { text-align: center; }
+    .footer-bottom .text-md-right { text-align: center !important; margin-top: 0.5rem; }
+}
