@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
 
     {{-- FILE CSS KUSTOM KITA --}}
@@ -87,7 +89,39 @@
         }
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopButton = document.querySelector('.back-to-top-btn');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Tampilkan tombol setelah scroll 300px
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+
     @stack('scripts')
+    <div class="sticky-buttons">
+        {{-- Tombol WhatsApp --}}
+        @php
+        $phoneNumber = '6281234567890'; // GANTI DENGAN NOMOR WA ANDA
+        $message = "Halo Klik Billiard, saya tertarik untuk booking meja.";
+        @endphp
+        {{-- Tombol Back to Top --}}
+        <a href="#hero" class="sticky-btn back-to-top-btn smooth-scroll">
+            <i class="ti-arrow-up"></i>
+        </a>
+        <a href="https://wa.me/{{ $phoneNumber }}?text={{ urlencode($message) }}" target="_blank" class="sticky-btn whatsapp-btn">
+            {{-- Ikon bola biliar --}}
+            <img src="{{ asset('assets/images/bola8.png') }}" alt="Icon" style="width: 32px; height: 32px; margin-left: 10px;">
+            <span class="booking-text">BOOKING NOW</span>
+        </a>
+
+
+    </div>
 </body>
 
 </html>

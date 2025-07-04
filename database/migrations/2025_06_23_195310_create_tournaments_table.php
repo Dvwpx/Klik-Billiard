@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('poster_image')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('status'); // Contoh: Akan Datang, Selesai
+            $table->string('status');
 
             // Kolom untuk relasi (kunci)
             $table->foreignId('location_id')->nullable()->constrained('locations')->onDelete('set null');

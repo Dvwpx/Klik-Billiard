@@ -1,7 +1,8 @@
-<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row ">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{{ asset('assets/images/logoklik.png') }}" class="mr-2" alt="logo" /></a>
-    <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
+    <a class="navbar-brand brand-logo mr-5" href="/dashboard"><img src="http://127.0.0.1:8000/assets/images/logoklik.png" style="height: 60px;" class="brandddd" alt="">
+    </a>
+    <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="{{ asset('assets/images/logoklik.png') }}" alt="" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -21,10 +22,6 @@
     </ul>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item dropdown">
-        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-          <i class="icon-bell mx-0"></i>
-          <span class="count"></span>
-        </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
           <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
           <a class="dropdown-item preview-item">
@@ -70,10 +67,10 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-          <img src="{{ asset('assets/images/faces/face28.jpg') }}" alt="profile" />
+          <img src="{{ asset('assets/images/profilklik.png') }}" alt="profile" />
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item">
+          <a class="dropdown-item" href="{{ route('users.index') }}">
             <i class="ti-settings text-primary"></i>
             Settings
           </a>
@@ -86,14 +83,38 @@
           </form>
         </div>
       </li>
-      <li class="nav-item nav-settings d-none d-lg-flex">
-        <a class="nav-link" href="#">
-          <i class="icon-ellipsis"></i>
-        </a>
-      </li>
     </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+    <button id="sidebarToggle" class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button">
       <span class="icon-menu"></span>
     </button>
   </div>
 </nav>
+
+<style>
+  .navbar .navbar-brand-wrapper .brand-logo-mini img {
+    width: calc(100px - 30px);
+    max-width: 100%;
+    margin: auto;
+  }
+
+  .navbar .navbar-brand-wrapper .navbar-brand img {
+    max-width: 100%;
+    height: 49px;
+    margin: auto;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 991px) {
+    .navbar .navbar-menu-wrapper {
+      width: calc(90% - 55px);
+      padding-left: 15px;
+      padding-right: 11px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .navbar .navbar-brand-wrapper {
+      width: 103.5px;
+    }
+  }
+</style>

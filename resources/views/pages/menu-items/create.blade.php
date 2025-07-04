@@ -28,7 +28,11 @@
 
                 <div class="form-group">
                     <label for="category">Kategori</label>
-                    <input type="text" class="form-control" id="category" name="category" placeholder="Contoh: Makanan Berat, Cemilan, Kopi" value="{{ old('category') }}" required>
+                    <select class="form-control" id="category" name="category" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="makanan" {{ old('category', $menu->category ?? '') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
+                        <option value="minuman" {{ old('category', $menu->category ?? '') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

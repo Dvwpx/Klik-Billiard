@@ -16,4 +16,9 @@ class Facility extends Model
         'description',
         'image',
     ];
+
+    public function locations()
+    {
+        return $this->belongsToMany(Location::class, 'facility_location', 'facility_id', 'location_id');
+    }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\TournamentsController;
 use App\Http\Controllers\Frontend\FacilitysController;
 use App\Http\Controllers\Frontend\MenuItemsController;
 use App\Http\Controllers\Frontend\PlayersController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -82,9 +83,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
 
 
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rute resource untuk User
     Route::resource('users', UserController::class);

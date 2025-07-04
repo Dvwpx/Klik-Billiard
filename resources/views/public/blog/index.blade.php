@@ -4,9 +4,8 @@
 
 @section('content')
 
-{{-- Page Header v2 --}}
-<section class="page-header-v2">
-    <div class="container" data-aos="fade-up">
+<section class="page-header-v2" data-aos="fade-in">
+    <div class="container">
         <h1>Blog & Artikel</h1>
         <p class="lead text-muted">Panduan, tips & trik, serta berita terbaru dari dunia biliar.</p>
     </div>
@@ -39,8 +38,6 @@
             </div>
             @endforelse
         </div>
-
-        {{-- Link Paginasi --}}
         <div class="d-flex justify-content-center mt-4">
             {{ $articles->links() }}
         </div>

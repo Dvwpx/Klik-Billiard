@@ -32,7 +32,7 @@ class TournamentController extends Controller
             'poster_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'status' => 'required|in:Akan Datang,Sedang Berlangsung,Selesai', // <-- PERBAIKAN
+            'status' => 'required|in:Akan Datang,Sedang Berlangsung,Selesai',
             'location_id' => 'nullable|exists:locations,id',
             'winner_id' => 'nullable|exists:players,id',
         ]);

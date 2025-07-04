@@ -5,7 +5,7 @@
 @section('content')
 
 {{-- Page Header v2 --}}
-<section class="page-header-v2">
+<section class="page-header-v2 mb-4">
     <div class="container" data-aos="fade-up">
         <h1>Fasilitas & Peralatan</h1>
         <p class="lead text-muted">Kami hanya menyediakan yang terbaik untuk pengalaman bermain Anda.</p>
@@ -13,7 +13,7 @@
 </section>
 
 {{-- Bagian Fasilitas Umum (Desain Baru) --}}
-<section class="amenities-list-section">
+<section class="amenities-list-section pb-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto" data-aos="fade-up">
@@ -31,56 +31,40 @@
 </section>
 
 <div class="main-content">
-    <div class="container py-5">
-        {{-- Bagian Katalog Peralatan --}}
-        <div class="catalog-section">
-            <h2 class="catalog-title" data-aos="fade-up">Katalog Peralatan</h2>
+    <section class="equipment-showcase py-5">
+        <div class="container">
+            <h2 class="text-center text-white mb-5" data-aos="fade-up">Peralatan Dan Perlengkapan</h2>
 
-            {{-- Tombol Filter Kategori --}}
-            <div class="row" data-aos="fade-up" data-aos-delay="100">
-                <div class="col-12 text-center mb-5">
-                    <div class="nav filter-pills">
-                        <a href="{{ route('facilities.public.index') }}" class="nav-link {{ request()->routeIs('facilities.public.index') ? 'active' : '' }}">Semua</a>
-                        @foreach ($categories as $cat)
-                        <a href="{{ route('facilities.public.byCategory', $cat->category) }}" class="nav-link {{ (isset($category) && $category == $cat->category) ? 'active' : '' }}">{{ $cat->category }}</a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                @forelse ($facilities as $facility)
-                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 4) * 100 }}">
-                    <div class="card facility-card h-100">
-                        <div class="facility-card-img-container">
-                            @if($facility->image)
-                            <img src="{{ asset('storage/' . $facility->image) }}" alt="{{ $facility->name }}">
-                            @else
-                            <img src="https://via.placeholder.com/100x100.png?text=Icon" alt="Icon">
-                            @endif
-                        </div>
-                        <h5 class="facility-card-title mt-3">{{ $facility->name }}</h5>
-                        <p class="facility-card-category">{{ $facility->category }}</p>
-                    </div>
-                </div>
-                @empty
-                <div class="col text-center">
-                    <p>
-                        @isset($category)
-                        Belum ada peralatan dalam kategori <strong>{{ $category }}</strong>.
+            @forelse ($facilities as $index => $facility)
+            <div class="row align-items-center mb-5 flex-lg-row{{ $index % 2 == 1 ? '-reverse' : '' }}" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
+                {{-- Gambar --}}
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="equipment-image-wrapper rounded overflow-hidden shadow">
+                        @if($facility->image)
+                        <img src="{{ asset('storage/' . $facility->image) }}" alt="{{ $facility->name }}" class="img-fluid equipment-image">
                         @else
-                        Belum ada data peralatan yang ditambahkan.
-                        @endisset
-                    </p>
+                        <img src="https://via.placeholder.com/800x500?text=Gambar+Peralatan" alt="Image" class="img-fluid equipment-image">
+                        @endif
+                    </div>
                 </div>
-                @endforelse
-            </div>
 
-            {{-- Link Paginasi --}}
-            <div class="d-flex justify-content-center mt-4">
-                {{ $facilities->links() }}
+                {{-- Deskripsi --}}
+                <div class="col-lg-6 text-white">
+                    <h3 class="equipment-title">{{ $facility->name }}</h3>
+                    <p class="text-muted">{{ $facility->category }}</p>
+                    <p class="equipment-description mt-3">Peralatan ini digunakan untuk menunjang permainan billiard secara profesional. Detail tambahan bisa dimasukkan di sini sesuai kebutuhan Anda.</p>
+                </div>
             </div>
+            @empty
+            <p class="text-center text-muted">Belum ada data peralatan yang ditampilkan.</p>
+            @endforelse
         </div>
-    </div>
+    </section>
+
 </div>
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>

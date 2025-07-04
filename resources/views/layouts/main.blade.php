@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Klik Billiard Admin</title>
+  <title>Klik Admin</title>
 
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/feather/feather.css') }}">
@@ -246,7 +246,6 @@
   <script src="{{ asset('assets/js/template.js') }}"></script>
   <script src="{{ asset('assets/js/settings.js') }}"></script>
   <script src="{{ asset('assets/js/todolist.js') }}"></script>
-  <script src="{{ asset('assets/js/file-upload.js') }}"></script>
 
   <!-- endinject -->
   <!-- Plugin js for this page -->
@@ -269,8 +268,82 @@
   <!-- Custom js for this page-->
   <script src="{{ asset('assets/js/dashboard.js') }}"></script>
   <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>
-  @stack('scripts')
   <!-- End custom js for this page-->
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleButton = document.querySelector('[data-toggle="offcanvas"]');
+    const sidebar = document.getElementById("sidebar");
+
+    toggleButton.addEventListener("click", function() {
+      sidebar.classList.toggle("active");
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const toggleButton = document.getElementById("sidebarToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    toggleButton.addEventListener("click", function() {
+      sidebar.classList.toggle("active");
+    });
+  });
+</script>
+
+<style>
+  /* Default (mobile): sidebar disembunyikan */
+  /* --- GLOBAL (untuk semua ukuran layar, default mobile-first) --- */
+  .sidebar-offcanvas {
+    max-height: calc(150vh - 62px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    position: fixed;
+    top: 57px;
+    left: -18px;
+    height: 100vh;
+    width: 250px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1050;
+  }
+
+  /* Saat toggle diklik (sidebar muncul) */
+  .sidebar-offcanvas.active {
+    transform: translateX(0);
+  }
+
+  /* --- TABLET (ukuran 768px ke atas) --- */
+  @media (min-width: 768px) {
+    .sidebar-offcanvas {
+      width: 270px;
+      left: 0;
+      top: 60px;
+      max-height: calc(150vh - 60px);
+    }
+  }
+
+  /* --- DESKTOP / LAPTOP (ukuran 992px ke atas) --- */
+  @media (min-width: 992px) {
+    .sidebar-offcanvas {
+      transform: none !important;
+      position: relative !important;
+      left: -12px;
+      top: 0 !important;
+      max-height: none !important;
+      height: auto !important;
+      z-index: auto;
+    }
+  }
+
+
+  /* Di layar lebar (desktop ≥ 992px), sidebar selalu terlihat dan tidak pakai transform */
+  @media (min-width: 992px) {
+    .sidebar-offcanvas {
+      transform: none !important;
+      position: relative !important;
+      z-index: auto;
+    }
+  }
+</style>
 
 </html>
