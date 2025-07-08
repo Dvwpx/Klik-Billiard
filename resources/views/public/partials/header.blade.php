@@ -3,7 +3,7 @@
         <a class="navbar-brand smooth-scroll d-flex align-items-center" href="/">
             <img src="{{ asset('assets/images/logoklik.png') }}" alt="Klik Billiard Logo" class="klik-logo mr-2">
             <span class="brand-text">
-                <span class="text-white">BILLIARD</span>
+                <span class="text-white"></span>
             </span>
         </a>
 
@@ -18,7 +18,7 @@
                 <li class="nav-item"><a class="nav-link smooth-scroll" href="/menu">Menu F&B</a></li>
                 {{-- Link ke Halaman Terpisah --}}
                 <li class="nav-item"><a class="nav-link" href="{{ route('tournaments.public.index') }}">Turnamen</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('blog.index') }}">Artikel</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('blog.index') }}">News</a></li>
             </ul>
         </div>
     </div>
@@ -27,7 +27,7 @@
 <style>
     /* Ukuran logo khusus navbar */
     .klik-logo {
-        height: 55px;
+        height: 85px;
         width: auto;
         object-fit: contain;
         transition: all 0.3s ease-in-out;
@@ -51,7 +51,7 @@
     /* Responsive */
     @media (max-width: 576px) {
         .klik-logo {
-            height: 42px;
+            height: 65px;
         }
 
         .brand-text {

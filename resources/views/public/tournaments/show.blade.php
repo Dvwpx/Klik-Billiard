@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <div class="article-hero-content" data-aos="fade-up">
-                    <p class="tournament-status" style="font-size: 1rem; color: var(--secondary-color);">{{ $tournament->status }}</p>
+                <div class="article-hero-content text-center" data-aos="fade-up">
+                    <p class="tournament-status" style="font-size: 2rem; color: var(--secondary-color);">{{ $tournament->status }}</p>
                     <h1>{{ $tournament->name }}</h1>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="sticky-sidebar">
                     @if($tournament->winner)
                     <div class="winner-card">
-                        <h5 class="winner-title">🏆 Pemenang 🏆</h5>
+                        <h5 class="winner-title">🏆 Champion 🏆</h5>
                         @if($tournament->winner->profile_image)<img src="{{ asset('storage/' . $tournament->winner->profile_image) }}" alt="{{ $tournament->winner->name }}" class="winner-avatar">
                         @else<img src="https://via.placeholder.com/120x120.png?text=🏆" alt="Winner" class="winner-avatar">@endif
                         <h3 class="winner-name">{{ $tournament->winner->name }}</h3>

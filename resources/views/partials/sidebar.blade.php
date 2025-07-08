@@ -44,6 +44,12 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('promos.index') }}">
+        <i class="ti-announcement menu-icon"></i>
+        <span class="menu-title">Manajemen Promo</span>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="{{ route('menu-items.index') }}">
         <i class="mdi mdi-silverware-fork-knife menu-icon"></i>
         <span class="menu-title">Menu F&B</span>

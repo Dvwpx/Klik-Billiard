@@ -1141,3 +1141,324 @@ section {
     visibility: visible;
     transform: translateY(0);
 }
+
+/* Styling untuk Promo */
+.promo-gallery-card {
+    display: block;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
+    background-color: #fff;
+    width: 100%;
+    /* Tinggi yang diperbesar 25% dari 450px = 562px */
+    height: 460px;
+    /* Tambahan margin untuk jarak antar gambar */
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.promo-gallery-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    border-color: #00ffff;
+    /* Efek glow seperti neon */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
+.promo-gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    /* Transisi smooth untuk hover effect */
+    transition: transform 0.3s ease;
+    /* Pastikan gambar tidak blur di mobile */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Khusus untuk mobile - pastikan gambar full */
+@media (max-width: 768px) {
+    .promo-gallery-card img {
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        height: 100%;
+        /* Hindari distorsi */
+        max-width: none;
+        min-height: 100%;
+    }
+}
+
+/* .promo-gallery-card:hover img {
+    transform: scale(1.05);
+} */
+
+/* Responsive adjustments - Mobile First */
+@media (max-width: 768px) {
+    .promo-gallery-card {
+        height: 625px; /* Diperbesar 25% dari 500px */
+        margin-bottom: 25px;
+        border-radius: 15px;
+        /* Kurangi efek hover untuk mobile */
+        transform: none;
+    }
+
+    .promo-gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Spacing untuk tablet */
+    #promo .row > [class*="col-"] {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .promo-gallery-card {
+        height: 687px; /* Diperbesar 25% dari 550px */
+        margin-bottom: 20px;
+        border-radius: 12px;
+        /* Pastikan gambar full */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .promo-gallery-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Spacing untuk mobile */
+    #promo .row > [class*="col-"] {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    /* Section title mobile */
+    #promo .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    /* Container mobile */
+    #promo .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Extra small devices (phones < 480px) */
+@media (max-width: 480px) {
+    .promo-gallery-card {
+        height: 625px; /* Diperbesar 25% dari 500px */
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .promo-gallery-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #promo .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+
+    #promo .container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    /* Row spacing untuk mobile kecil */
+    #promo .row > [class*="col-"] {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+/* Styling untuk section promo */
+#promo {
+    background: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+#promo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>')
+        repeat;
+    background-size: 50px 50px;
+    opacity: 0.3;
+}
+
+#promo .container {
+    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+}
+
+#promo .section-title {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+/* Jarak antar kolom dan efek tambahan */
+#promo .row > [class*="col-"] {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Optimasi untuk touch device */
+@media (hover: none) and (pointer: coarse) {
+    .promo-gallery-card:hover {
+        transform: none;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .promo-gallery-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    /* Matikan efek shimmer untuk performa mobile */
+    .promo-gallery-card::before {
+        display: none;
+    }
+}
+
+/* Optimasi untuk mobile landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+    .promo-gallery-card {
+        height: 437px; /* Diperbesar 25% dari 350px */
+    }
+
+    .promo-gallery-card img {
+        object-fit: cover;
+        object-position: center;
+    }
+
+    #promo .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+}
+
+/* Optimasi untuk mobile portrait */
+@media (max-width: 480px) and (orientation: portrait) {
+    .promo-gallery-card {
+        height: 650px; /* Diperbesar 25% dari 520px */
+        width: 100%;
+    }
+
+    .promo-gallery-card img {
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Layout single column untuk mobile kecil */
+    #promo .row > [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+/* Mobile utilities */
+@media (max-width: 576px) {
+    /* Prevent zoom on double tap */
+    .promo-gallery-card {
+        touch-action: manipulation;
+        /* Pastikan container tidak terpotong - diperbesar 25% */
+        min-height: 687px;
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .promo-gallery-card img {
+        /* Memastikan gambar mengisi penuh container */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        /* Mencegah gambar blur */
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    /* Smooth scrolling untuk mobile */
+    #promo {
+        scroll-behavior: smooth;
+    }
+
+    /* Text responsive */
+    .text-muted {
+        font-size: 0.9rem;
+        padding: 0 20px;
+    }
+}
+
+/* Fix untuk viewport mobile */
+@media (max-width: 414px) {
+    .promo-gallery-card {
+        height: 625px; /* Diperbesar 25% dari 500px */
+        margin-bottom: 20px;
+    }
+
+    .promo-gallery-card img {
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+/* Fix untuk iPhone dan device kecil */
+@media (max-width: 375px) {
+    .promo-gallery-card {
+        height: 600px; /* Diperbesar 25% dari 480px */
+    }
+}
+
+/* Performance optimizations untuk mobile */
+@media (max-width: 768px) {
+    .promo-gallery-card {
+        /* Gunakan transform3d untuk hardware acceleration */
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+    }
+
+    .promo-gallery-card img {
+        /* Optimasi loading gambar */
+        loading: lazy;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    /* Kurangi kompleksitas background untuk performa */
+    #promo::before {
+        display: none;
+    }
+
+    #promo {
+        background: #121212;
+    }
+}

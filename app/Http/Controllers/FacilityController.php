@@ -12,7 +12,16 @@ class FacilityController extends Controller
     public function index()
     {
         $facilities = Facility::latest()->get();
-        return view('pages.facilities.index', compact('facilities'));
+        $amenities = [
+            ['icon' => 'fas fa-parking', 'name' => 'Parkir Luas & Aman'],
+            ['icon' => 'fas fa-wifi', 'name' => 'Koneksi WiFi Cepat'],
+            ['icon' => 'fas fa-mug-hot', 'name' => 'Cafe & Resto'],
+            ['icon' => 'fas fa-smoking', 'name' => 'Smoking Area'],
+            ['icon' => 'fas fa-restroom', 'name' => 'Toilet Bersih'],
+            ['icon' => 'fas fa-baby-carriage', 'name' => 'Area Ramah Anak'],
+        ];
+
+        return view('pages.facilities.index', compact('facilities', 'amenities'));
     }
 
     public function create()

@@ -20,8 +20,8 @@
                 <ul class="amenities-list">
                     @foreach($amenities as $amenity)
                     <li class="amenity-list-item">
-                        <i class="ti-check-box"></i>
-                        <span>{{ $amenity }}</span>
+                        <i class="{{ $amenity['icon'] }}"></i>
+                        <span>{{ $amenity['name'] }}</span>
                     </li>
                     @endforeach
                 </ul>

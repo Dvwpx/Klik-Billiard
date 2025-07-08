@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
 
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('assets/images/logoklik.png') }}" />
 </head>
 
 <body>

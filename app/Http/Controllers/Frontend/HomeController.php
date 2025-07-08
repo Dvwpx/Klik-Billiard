@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\MenuItem;
-use App\Models\Article;  // Pastikan semua model ini di-import
+use App\Models\Article;
 use App\Models\Location;
 use App\Models\Tournament;
 use App\Models\Facility;
+use App\Models\Promo;
 
 class HomeController extends Controller
 {
@@ -23,11 +24,14 @@ class HomeController extends Controller
             ['icon' => 'fas fa-mug-hot', 'name' => 'Cafe & Resto'],
             ['icon' => 'fas fa-smoking', 'name' => 'Smoking Area'],
             ['icon' => 'fas fa-restroom', 'name' => 'Toilet Bersih'],
-            ['icon' => 'fas fa-baby-carriage', 'name' => 'Area Ramah Anak'],
+            ['icon' => 'fas fa-solid fa-ban-smoking', 'name' => 'Area Ramah Anak'],
         ];
 
         // Ambil data peralatan dari DB
         $showcaseFacilities = Facility::latest()->take(4)->get();
+
+        // AMBIL PROMO AKTIF TERBARU
+        $activePromos = Promo::where('status', 'active')->latest()->take(3)->get();
 
         // Ambil data Makanan (termasuk cemilan)
         $foodItems = MenuItem::whereIn('category', ['Makanan', 'Makanan Berat', 'Cemilan', 'Snack'])
@@ -52,7 +56,8 @@ class HomeController extends Controller
             'foodItems',
             'drinkItems',
             'recentTournaments',
-            'latestArticles'
+            'latestArticles',
+            'activePromos'
         ));
     }
 

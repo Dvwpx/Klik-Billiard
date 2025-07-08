@@ -16,7 +16,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ asset('assets/css/vertical-layout-light/style.css') }}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('assets/images/logoklik.png') }}" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
               <div class="brand-logo">
                 <img src="{{ asset('assets/images/logoklik.png') }}" alt="logo">
               </div>
-              <h4>Hello! let's get started</h4>
+              <h4>Hello!</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" method="POST" action="{{ route('login.authenticate') }}">
                 @csrf

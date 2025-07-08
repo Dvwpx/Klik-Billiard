@@ -30,6 +30,35 @@
         </div>
     </section>
 
+    {{-- Seksi Galeri Promo --}}
+    <section id="promo" class="section-padding">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h2 class="section-title" data-aos="fade-up">Promo & Penawaran Spesial</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                @forelse ($activePromos as $promo)
+                <div class="col-lg-4 col-md-6 col-12 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
+                    <a href="{{ $promo->link_url ?? '#' }}"
+                        target="_blank"
+                        class="promo-gallery-card"
+                        aria-label="Promo {{ $promo->title }}">
+                        <img src="{{ asset('storage/' . $promo->banner_image) }}"
+                            alt="{{ $promo->title }}"
+                            loading="lazy"
+                            decoding="async">
+                    </a>
+                </div>
+                @empty
+                <div class="col-12 text-center">
+                    <p class="text-muted">Saat ini belum ada promo spesial. Cek kembali nanti!</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
     {{-- 3. Seksi Lokasi --}}
     <section id="locations" class="location-showcase-split">
         @if($featuredLocation)

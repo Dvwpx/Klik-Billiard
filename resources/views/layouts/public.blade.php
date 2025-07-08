@@ -107,8 +107,8 @@
     <div class="sticky-buttons">
         {{-- Tombol WhatsApp --}}
         @php
-        $phoneNumber = '6281234567890'; // GANTI DENGAN NOMOR WA ANDA
-        $message = "Halo Klik Billiard, saya tertarik untuk booking meja.";
+        $phoneNumber = '6282177715551'; // GANTI DENGAN NOMOR WA ANDA
+        $message = "Halo Klik Billiard, saya tertarik untuk bermain di Klik Billiard. Apakah table masih tersedia ? Terima kasih.";
         @endphp
         {{-- Tombol Back to Top --}}
         <a href="#hero" class="sticky-btn back-to-top-btn smooth-scroll">

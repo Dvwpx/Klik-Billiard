@@ -9,6 +9,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\LocationsController;
@@ -105,4 +106,7 @@ Route::middleware(['auth'])->group(function () {
 
     // RUTE UNTUK MENU ITEM    
     Route::resource('menu-items', MenuItemController::class);
+
+    // RUTE UNTUK PROMO
+    Route::resource('promos', PromoController::class);
 });
