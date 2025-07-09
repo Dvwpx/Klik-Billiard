@@ -67,7 +67,7 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 // GANTI 'VIDEO_ID' DENGAN ID VIDEO YOUTUBE ANDA
-                videoId: 'LzWeSyZulWk',
+                videoId: 'No83wnOUMO8',
                 playerVars: {
                     'autoplay': 1, // Mainkan otomatis
                     'controls': 0, // Sembunyikan kontrol player
@@ -75,7 +75,7 @@
                     'showinfo': 0, // Sembunyikan judul video
                     'mute': 1, // Wajib mute untuk autoplay di browser modern
                     'loop': 1, // Ulangi video
-                    'playlist': 'LzWeSyZulWk' // Diperlukan untuk loop
+                    'playlist': 'No83wnOUMO8' // Diperlukan untuk loop
                 },
                 events: {
                     'onReady': onPlayerReady
