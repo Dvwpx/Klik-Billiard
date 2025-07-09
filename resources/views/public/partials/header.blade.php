@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link smooth-scroll" href="/">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="/lokasi">Lokasi</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll" href="/lokasi/klik-billiard">Lokasi</a></li>
                 <li class="nav-item"><a class="nav-link smooth-scroll" href="/fasilitas">Fasilitas</a></li>
                 <li class="nav-item"><a class="nav-link smooth-scroll" href="/menu">Menu F&B</a></li>
                 {{-- Link ke Halaman Terpisah --}}

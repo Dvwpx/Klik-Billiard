@@ -13,7 +13,7 @@
             <div class="col-lg-10 mx-auto">
                 <div class="article-hero-content" data-aos="fade-up">
                     <p class="subtitle" style="color: var(--secondary-color); font-weight: 700; letter-spacing: 2px;">Lokasi Kami</p>
-                    <h1>Klik Billiard</h1>
+                    <h1>{{ $location->address }}</h1>
                 </div>
             </div>
         </div>
