@@ -27,7 +27,7 @@ class PromoController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'banner_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'banner_image_url' => 'required|url',
             'link_url' => 'nullable|url',
             'status' => 'required|in:active,inactive',
         ]);
@@ -49,7 +49,7 @@ class PromoController extends Controller
                 ]
             );
 
-            $uploadedImageUrl = $uploadResult['secure_url'];
+            $uploadedImageUrl = $request->banner_image_url;
 
             Promo::create([
                 'title' => $request->title,

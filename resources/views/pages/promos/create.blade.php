@@ -19,8 +19,9 @@
             </div>
             @endif
 
-            <form class="forms-sample" method="POST" action="{{ route('promos.store') }}" enctype="multipart/form-data">
+            <form class="forms-sample" method="POST" action="{{ route('promos.store') }}">
                 @csrf
+
                 <div class="form-group">
                     <label for="title">Judul Promo</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Contoh: Promo Happy Hour" value="{{ old('title') }}" required>
@@ -32,15 +33,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Banner Promo</label>
-                    <input type="file" name="banner_image" class="file-upload-default" required>
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Pilih Gambar Banner">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
+                    <label>Upload Banner Promo</label><br>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+                    <input type="hidden" name="banner_image_url" id="banner_image_url" value="{{ old('banner_image_url') }}">
+                    <div id="preview_image" style="display: none;">
+                        <img src="" id="image_preview_tag" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     </div>
-                    <small class="form-text text-muted">Gambar akan menjadi background seksi promo. Ukuran rekomendasi: 1920x1080 pixel.</small>
+                    <small class="form-text text-muted mt-2">Gambar akan menjadi background seksi promo. Ukuran rekomendasi: 1920x1080 pixel.</small>
                 </div>
 
                 <div class="form-group">
@@ -60,7 +59,34 @@
                 <button type="submit" class="btn btn-primary mr-2">Simpan</button>
                 <a href="{{ route('promos.index') }}" class="btn btn-light">Batal</a>
             </form>
+
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<!-- Cloudinary Upload Widget -->
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const uploadWidget = cloudinary.createUploadWidget({
+        cloudName: 'dvlrqchqs',
+        uploadPreset: 'default_preset', // Ganti sesuai preset kamu di dashboard Cloudinary
+        folder: 'klikbilliard/promos',
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        maxFileSize: 10485760 // 10 MB
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            const imageUrl = result.info.secure_url;
+            document.getElementById('banner_image_url').value = imageUrl;
+            document.getElementById('image_preview_tag').src = imageUrl;
+            document.getElementById('preview_image').style.display = 'block';
+        }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function() {
+        uploadWidget.open();
+    }, false);
+</script>
+@endpush
