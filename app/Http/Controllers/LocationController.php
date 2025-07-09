@@ -6,6 +6,8 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Cloudinary\Cloudinary as CloudinaryApi;
 
 class LocationController extends Controller
 {
@@ -33,15 +35,35 @@ class LocationController extends Controller
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'required|in:open,closed',
+            'map_url' => 'nullable|url|max:255',
+
         ]);
 
         // Proses upload gambar
         $imagePath = null;
         if ($request->hasFile('featured_image')) {
-            $image = $request->file('featured_image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/locations'), $imageName);
-            $imagePath = 'locations/' . $imageName;
+            try {
+                // Inisialisasi Cloudinary langsung
+                $cloudinary = new CloudinaryApi([
+                    'cloud' => [
+                        'cloud_name' => config('cloudinary.cloud_name'),
+                        'api_key' => config('cloudinary.api_key'),
+                        'api_secret' => config('cloudinary.api_secret'),
+                    ]
+                ]);
+
+                $uploadResult = $cloudinary->uploadApi()->upload(
+                    $request->file('featured_image')->getRealPath(),
+                    [
+                        'folder' => 'klikbilliard/locations'
+                    ]
+                );
+
+                $imagePath = $uploadResult['secure_url'];
+            } catch (\Exception $e) {
+                Log::error('Cloudinary upload error: ' . $e->getMessage());
+                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            }
         }
 
         // Buat data baru
@@ -53,9 +75,10 @@ class LocationController extends Controller
             'description' => $request->description,
             'phone_number' => $request->phone_number,
             'featured_image' => $imagePath,
-            'latitude' => $request->latitude, // Perbaikan di sini
-            'longitude' => $request->longitude, // Perbaikan di sini
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
             'status' => $request->status,
+            'map_url' => $request->map_url,
         ]);
 
         return redirect()->route('locations.index')->with('success', 'Lokasi baru berhasil ditambahkan.');
@@ -79,6 +102,7 @@ class LocationController extends Controller
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'required|in:open,closed',
+            'map_url' => 'nullable|url|max:255',
         ]);
 
         // Siapkan data untuk update
@@ -88,19 +112,41 @@ class LocationController extends Controller
         $location->city = $request->city;
         $location->description = $request->description;
         $location->phone_number = $request->phone_number;
-        $location->latitude = $request->latitude; // Perbaikan di sini
-        $location->longitude = $request->longitude; // Perbaikan di sini
+        $location->latitude = $request->latitude;
+        $location->longitude = $request->longitude;
         $location->status = $request->status;
+        $location->map_url = $request->map_url;
 
         // Proses gambar jika ada yang baru
         if ($request->hasFile('featured_image')) {
-            if ($location->featured_image) {
-                Storage::delete('public/' . $location->featured_image);
+            try {
+                // Inisialisasi Cloudinary langsung
+                $cloudinary = new CloudinaryApi([
+                    'cloud' => [
+                        'cloud_name' => config('cloudinary.cloud_name'),
+                        'api_key' => config('cloudinary.api_key'),
+                        'api_secret' => config('cloudinary.api_secret'),
+                    ]
+                ]);
+
+                // Upload gambar baru ke Cloudinary
+                $uploadResult = $cloudinary->uploadApi()->upload(
+                    $request->file('featured_image')->getRealPath(),
+                    [
+                        'folder' => 'klikbilliard/locations'
+                    ]
+                );
+
+                // Hapus gambar lama dari Cloudinary (opsional)
+                if ($location->featured_image) {
+                    $this->deleteFromCloudinary($location->featured_image);
+                }
+
+                $location->featured_image = $uploadResult['secure_url'];
+            } catch (\Exception $e) {
+                Log::error('Cloudinary upload error: ' . $e->getMessage());
+                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
             }
-            $image = $request->file('featured_image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/locations'), $imageName);
-            $location->featured_image = 'locations/' . $imageName;
         }
 
         $location->save(); // Simpan perubahan
@@ -110,10 +156,58 @@ class LocationController extends Controller
 
     public function destroy(Location $location)
     {
-        if ($location->featured_image) {
-            Storage::delete('public/' . $location->featured_image);
+        try {
+            // Hapus gambar dari Cloudinary
+            if ($location->featured_image) {
+                $this->deleteFromCloudinary($location->featured_image);
+            }
+
+            $location->delete();
+
+            return redirect()->route('locations.index')->with('success', 'Lokasi berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Cloudinary delete error: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Gagal menghapus lokasi: ' . $e->getMessage()]);
         }
-        $location->delete();
-        return redirect()->route('locations.index')->with('success', 'Lokasi berhasil dihapus.');
+    }
+
+    /**
+     * Helper method untuk menghapus gambar dari Cloudinary
+     */
+    private function deleteFromCloudinary($imageUrl)
+    {
+        try {
+            // Inisialisasi Cloudinary
+            $cloudinary = new CloudinaryApi([
+                'cloud' => [
+                    'cloud_name' => config('cloudinary.cloud_name'),
+                    'api_key' => config('cloudinary.api_key'),
+                    'api_secret' => config('cloudinary.api_secret'),
+                ]
+            ]);
+
+            // Extract public_id dari URL
+            $publicId = $this->extractPublicIdFromUrl($imageUrl);
+
+            if ($publicId) {
+                $cloudinary->uploadApi()->destroy($publicId);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error deleting from Cloudinary: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Helper method untuk extract public_id dari Cloudinary URL
+     */
+    private function extractPublicIdFromUrl($url)
+    {
+        // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234567890/folder/filename.jpg
+        // Public ID: folder/filename (tanpa ekstensi)
+
+        $pattern = '/\/v\d+\/(.+)\./';
+        preg_match($pattern, $url, $matches);
+
+        return isset($matches[1]) ? $matches[1] : null;
     }
 }

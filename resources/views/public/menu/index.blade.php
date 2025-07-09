@@ -25,7 +25,7 @@
                     <div class="menu-list-item-v2">
                         {{-- KOLOM GAMBAR (BARU) --}}
                         @if($item->image)
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="menu-item-image">
+                        <img src="{{ $item->image }}" alt="{{ $item->name }}" class="menu-item-image">
                         @endif
 
                         {{-- KOLOM UTAMA (NAMA, GARIS, HARGA) --}}

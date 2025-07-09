@@ -45,7 +45,7 @@
                     @if($promo->banner_image)
                     <div class="mt-2">
                         <p>Banner saat ini:</p>
-                        <img src="{{ asset('storage/' . $promo->banner_image) }}" alt="Banner Promo" style="max-width: 300px; border-radius: 5px;">
+                        <img src="{{$promo->banner_image}}" alt="Banner Promo" style="max-width: 300px; border-radius: 5px;">
                     </div>
                     @endif
                 </div>

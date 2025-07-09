@@ -32,33 +32,34 @@
 
     {{-- Seksi Galeri Promo --}}
     <section id="promo" class="section-padding">
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-12">
-                    <h2 class="section-title" data-aos="fade-up">Promo & Penawaran Spesial</h2>
-                </div>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h2 class="section-title" data-aos="fade-up">Promo & Penawaran Spesial</h2>
             </div>
-            <div class="row justify-content-center">
-                @forelse ($activePromos as $promo)
+        </div>
+        <div class="row justify-content-center">
+            @forelse ($activePromos as $promo)
                 <div class="col-lg-4 col-md-6 col-12 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
                     <a href="{{ $promo->link_url ?? '#' }}"
-                        target="_blank"
-                        class="promo-gallery-card"
-                        aria-label="Promo {{ $promo->title }}">
-                        <img src="{{ asset('storage/' . $promo->banner_image) }}"
-                            alt="{{ $promo->title }}"
-                            loading="lazy"
-                            decoding="async">
+                       target="_blank"
+                       class="promo-gallery-card"
+                       aria-label="Promo {{ $promo->title }}">
+                        <img src="{{ $promo->banner_image }}"
+                             alt="{{ $promo->title }}"
+                             loading="lazy"
+                             decoding="async">
                     </a>
                 </div>
-                @empty
+            @empty
                 <div class="col-12 text-center">
                     <p class="text-muted">Saat ini belum ada promo spesial. Cek kembali nanti!</p>
                 </div>
-                @endforelse
-            </div>
+            @endforelse
         </div>
-    </section>
+    </div>
+</section>
+    
     {{-- 3. Seksi Lokasi --}}
     <section id="locations" class="location-showcase-split">
         @if($featuredLocation)
@@ -97,7 +98,7 @@
                         </div>
                     </div>
 
-                    <a href="https://maps.app.goo.gl/wPZgqVqQgVvQE17j9" class="btn btn-primary mt-3" style="width: fit-content;">
+                    <a href="{{ $featuredLocation->map_url }}" class="btn btn-primary mt-3" style="width: fit-content;" target="_blank" rel="noopener">
                         Navigasi Lokasi
                     </a>
                 </div>
@@ -163,7 +164,7 @@
                         <div class="col-lg-6">
                             <div class="equipment-split-image">
                                 @if($facility->image)
-                                <img src="{{ asset('storage/' . $facility->image) }}" alt="{{ $facility->name }}">
+                                <img src="{{ $facility->image }}" alt="{{ $facility->name }}">
                                 @else
                                 <img src="https://via.placeholder.com/400x400.png?text=Image" alt="Image">
                                 @endif
@@ -181,7 +182,7 @@
                         <div class="col-lg-6 order-lg-1">
                             <div class="equipment-split-image">
                                 @if($facility->image)
-                                <img src="{{ asset('storage/' . $facility->image) }}" alt="{{ $facility->name }}">
+                                <img src="{{ $facility->image }}" alt="{{ $facility->name }}">
                                 @else
                                 <img src="https://via.placeholder.com/400x400.png?text=Image" alt="Image">
                                 @endif
@@ -217,7 +218,7 @@
                         @forelse ($foodItems as $item)
                         <div class="menu-item-final">
                             @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="menu-item-image">
+                            <img src="{{ $item->image }}" alt="{{ $item->name }}" class="menu-item-image">
                             @endif
                             <div class="details-wrapper">
                                 <div class="details">
@@ -238,7 +239,7 @@
                         @forelse ($drinkItems as $item)
                         <div class="menu-item-final">
                             @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="menu-item-image">
+                            <img src="{{ $item->image }}" alt="{{ $item->name }}" class="menu-item-image">
                             @endif
                             <div class="details-wrapper">
                                 <div class="details">
@@ -258,32 +259,32 @@
     </section>
 
     {{-- 6. Seksi Turnamen --}}
-    <section id="turnamen" class="section-padding">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">TURNAMEN TERKINI</h2>
-            <p class="text-center text-muted lead mb-5" data-aos="fade-up" data-aos-delay="100">Ikuti perkembangan event-event paling bergengsi.</p>
-            <div class="row">
-                @foreach ($recentTournaments as $tournament)
-                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 2) * 100 }}">
-                    <a href="{{ route('tournaments.public.show', $tournament->slug) }}" class="text-decoration-none">
-                        <div class="tournament-card" style="height: 300px;">
-                            <img src="{{ $tournament->poster_image ? asset('storage/' . $tournament->poster_image) : 'https://via.placeholder.com/400x500.png?text=Event' }}" class="card-bg" alt="{{ $tournament->name }}">
-                            <div class="card-overlay"></div>
-                            <div class="card-content">
-                                <p class="tournament-status">{{ $tournament->status }}</p>
-                                <h4 class="tournament-name">{{ Str::limit($tournament->name, 40) }}</h4>
-                                <p class="tournament-date">{{ \Carbon\Carbon::parse($tournament->start_date)->format('d F Y') }}</p>
-                            </div>
+<section id="turnamen" class="section-padding">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">TURNAMEN TERKINI</h2>
+        <p class="text-center text-muted lead mb-5" data-aos="fade-up" data-aos-delay="100">Ikuti perkembangan event-event paling bergengsi.</p>
+        <div class="row">
+            @foreach ($recentTournaments as $tournament)
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 2) * 100 }}">
+                <a href="{{ route('tournaments.public.show', $tournament->slug) }}" class="text-decoration-none">
+                    <div class="tournament-card">
+                        <div class="tournament-image" style="background-image: url('{{ $tournament->poster_image ?? 'https://via.placeholder.com/400x300.png?text=Event' }}');"></div>
+                        <div class="tournament-overlay"></div>
+                        <div class="tournament-content">
+                            <span class="tournament-status status-{{ strtolower(str_replace(' ', '-', $tournament->status)) }}">{{ $tournament->status }}</span>
+                            <h4 class="tournament-name">{{ Str::limit($tournament->name, 40) }}</h4>
+                            <p class="tournament-date">{{ \Carbon\Carbon::parse($tournament->start_date)->format('d F Y') }}</p>
                         </div>
-                    </a>
-                </div>
-                @endforeach
+                    </div>
+                </a>
             </div>
-            <div class="text-center mt-4" data-aos="fade-up">
-                <a href="{{ route('tournaments.public.index') }}" class="btn btn-primary">Lihat Semua Turnamen</a>
-            </div>
+            @endforeach
         </div>
-    </section>
+        <div class="text-center mt-4" data-aos="fade-up">
+            <a href="{{ route('tournaments.public.index') }}" class="btn btn-primary">Lihat Semua Turnamen</a>
+        </div>
+    </div>
+</section>
 
     {{-- 7. Seksi Blog --}}
     <section id="blog" class="py-5 bg-dark-grey">
@@ -295,7 +296,7 @@
                     <div class="article-card-v2">
                         <a href="{{ route('blog.show', $article->slug) }}" class="d-block">
                             <div class="article-card-img-container">
-                                <img src="{{ $article->featured_image ? asset('storage/' . $article->featured_image) : 'https://via.placeholder.com/400x250.png?text=Klik+Billiard' }}" alt="{{ $article->title }}">
+                                <img src="{{ $article->featured_image ?? 'https://via.placeholder.com/400x250.png?text=Klik+Billiard' }}" alt="{{ $article->title }}">
                                 <div class="article-card-category">{{ $article->created_at->format('d M') }}</div>
                             </div>
                             <div class="article-card-body">
@@ -335,3 +336,130 @@
     });
 </script>
 @endif
+
+
+<style>
+.tournament-card {
+    position: relative;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.tournament-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.tournament-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.tournament-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+}
+
+.tournament-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px;
+    z-index: 2;
+    color: white;
+}
+
+.tournament-status {
+    display: inline-block;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Status: Akan Datang */
+.tournament-status.status-akan-datang {
+    background: red;
+}
+
+/* Status: Sedang Berlangsung */
+.tournament-status.status-sedang-berlangsung {
+    background: orange;
+}
+
+/* Status: Sudah Selesai */
+.tournament-status.status-selesai {
+    background: #16ff24ba;
+}
+
+/* Status: Registrasi Dibuka */
+.tournament-status.status-registrasi-dibuka {
+    background: #13a81c;
+}
+
+/* Status: Registrasi Ditutup */
+.tournament-status.status-registrasi-ditutup {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+/* Fallback untuk status lainnya */
+.tournament-status {
+    background: #16ff24c9;
+}
+
+.tournament-name {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.tournament-date {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tournament-card {
+        height: 250px;
+    }
+    
+    .tournament-content {
+        padding: 20px;
+    }
+    
+    .tournament-name {
+        font-size: 1.1rem;
+    }
+    
+    .tournament-date {
+        font-size: 0.9rem;
+    }
+}
+</style>

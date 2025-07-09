@@ -32,7 +32,7 @@
                         <tr>
                             <td class="py-1">
                                 @if($facility->image)
-                                <img src="{{ asset('storage/' . $facility->image) }}" alt="image" />
+                                <img src="{{$facility->image }}" alt="image" />
                                 @else
                                 <img src="https://via.placeholder.com/150x150.png?text=No+Image" alt="image" />
                                 @endif

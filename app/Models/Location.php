@@ -20,6 +20,7 @@ class Location extends Model
         'latitude',
         'longitude',
         'status',
+        'map_url',
     ];
 
     public function tournaments()

@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Cloudinary\Cloudinary as CloudinaryApi;
 
 class ArticleController extends Controller
 {
@@ -37,19 +39,35 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Boleh kosong, harus gambar, max 2MB
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'status' => 'required|in:draft,published',
         ]);
 
         // 2. Proses Upload Gambar (jika ada)
         $imagePath = null;
         if ($request->hasFile('featured_image')) {
-            $image = $request->file('featured_image');
-            // Buat nama file yang unik
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            // Pindahkan file ke public/storage/articles
-            $image->move(public_path('storage/articles'), $imageName);
-            $imagePath = 'articles/' . $imageName;
+            try {
+                // Inisialisasi Cloudinary langsung
+                $cloudinary = new CloudinaryApi([
+                    'cloud' => [
+                        'cloud_name' => config('cloudinary.cloud_name'),
+                        'api_key' => config('cloudinary.api_key'),
+                        'api_secret' => config('cloudinary.api_secret'),
+                    ]
+                ]);
+
+                $uploadResult = $cloudinary->uploadApi()->upload(
+                    $request->file('featured_image')->getRealPath(),
+                    [
+                        'folder' => 'klikbilliard/articles'
+                    ]
+                );
+
+                $imagePath = $uploadResult['secure_url'];
+            } catch (\Exception $e) {
+                Log::error('Cloudinary upload error: ' . $e->getMessage());
+                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            }
         }
 
         // 3. Membuat Slug dan Simpan ke Database
@@ -91,7 +109,7 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'status' => 'required|in:draft,published',
         ]);
 
@@ -105,16 +123,34 @@ class ArticleController extends Controller
 
         // 3. Proses Upload Gambar Baru (jika ada)
         if ($request->hasFile('featured_image')) {
-            // Hapus gambar lama jika ada
-            if ($article->featured_image) {
-                Storage::delete('public/' . $article->featured_image);
-            }
+            try {
+                // Inisialisasi Cloudinary langsung
+                $cloudinary = new CloudinaryApi([
+                    'cloud' => [
+                        'cloud_name' => config('cloudinary.cloud_name'),
+                        'api_key' => config('cloudinary.api_key'),
+                        'api_secret' => config('cloudinary.api_secret'),
+                    ]
+                ]);
 
-            // Upload gambar baru
-            $image = $request->file('featured_image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/articles'), $imageName);
-            $updateData['featured_image'] = 'articles/' . $imageName;
+                // Upload gambar baru ke Cloudinary
+                $uploadResult = $cloudinary->uploadApi()->upload(
+                    $request->file('featured_image')->getRealPath(),
+                    [
+                        'folder' => 'klikbilliard/articles'
+                    ]
+                );
+
+                // Hapus gambar lama dari Cloudinary (opsional)
+                if ($article->featured_image) {
+                    $this->deleteFromCloudinary($article->featured_image);
+                }
+
+                $updateData['featured_image'] = $uploadResult['secure_url'];
+            } catch (\Exception $e) {
+                Log::error('Cloudinary upload error: ' . $e->getMessage());
+                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            }
         }
 
         // 4. Update data di database
@@ -129,14 +165,59 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        // Hapus gambar dari storage jika ada
-        if ($article->featured_image) {
-            Storage::delete('public/' . $article->featured_image);
+        try {
+            // Hapus gambar dari Cloudinary
+            if ($article->featured_image) {
+                $this->deleteFromCloudinary($article->featured_image);
+            }
+
+            // Hapus data artikel dari database
+            $article->delete();
+
+            return redirect()->route('articles.index')->with('success', 'Artikel berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Cloudinary delete error: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Gagal menghapus artikel: ' . $e->getMessage()]);
         }
+    }
 
-        // Hapus data artikel dari database
-        $article->delete();
+    /**
+     * Helper method untuk menghapus gambar dari Cloudinary
+     */
+    private function deleteFromCloudinary($imageUrl)
+    {
+        try {
+            // Inisialisasi Cloudinary
+            $cloudinary = new CloudinaryApi([
+                'cloud' => [
+                    'cloud_name' => config('cloudinary.cloud_name'),
+                    'api_key' => config('cloudinary.api_key'),
+                    'api_secret' => config('cloudinary.api_secret'),
+                ]
+            ]);
 
-        return redirect()->route('articles.index')->with('success', 'Artikel berhasil dihapus.');
+            // Extract public_id dari URL
+            $publicId = $this->extractPublicIdFromUrl($imageUrl);
+
+            if ($publicId) {
+                $cloudinary->uploadApi()->destroy($publicId);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error deleting from Cloudinary: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Helper method untuk extract public_id dari Cloudinary URL
+     */
+    private function extractPublicIdFromUrl($url)
+    {
+        // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234567890/folder/filename.jpg
+        // Public ID: folder/filename (tanpa ekstensi)
+
+        $pattern = '/\/v\d+\/(.+)\./';
+        preg_match($pattern, $url, $matches);
+
+        return isset($matches[1]) ? $matches[1] : null;
     }
 }

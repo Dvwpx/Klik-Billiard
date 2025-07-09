@@ -5,7 +5,7 @@
 @section('content')
 
 <section class="article-hero" data-aos="fade-in">
-    <div class="article-hero-bg" style="background-image: url('{{ $tournament->poster_image ? asset('storage/' . $tournament->poster_image) : 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
+    <div class="article-hero-bg" style="background-image: url('{{ $tournament->poster_image ?? 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
     <div class="article-hero-overlay"></div>
     <div class="container">
         <div class="row">

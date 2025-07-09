@@ -79,6 +79,10 @@
                         <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="map_url">Link Google Maps (Navigasi)</label>
+                    <input type="url" class="form-control" id="map_url" name="map_url" placeholder="https://maps.app.goo.gl/..." value="{{ old('map_url') }}">
+                </div>
 
                 <button type="submit" class="btn btn-primary mr-2">Simpan</button>
                 <a href="{{ route('locations.index') }}" class="btn btn-light">Batal</a>

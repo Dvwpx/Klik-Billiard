@@ -9,7 +9,7 @@
                 Daftar semua artikel yang ada di sistem
             </p>
 
-            <a href="#" class="btn btn-primary mb-3">Tulis Artikel Baru</a>
+            <a href="{{ route('articles.create') }}" class="btn btn-primary mb-3">Tulis Artikel Baru</a>
 
             <div class="table-responsive">
                 <table class="table table-striped">

@@ -36,6 +36,6 @@ class BlogController extends Controller
             ->get();
 
         // Kirim data artikel dan artikel terkait ke view
-        return view('public.blog.show', compact('article', 'relatedArticles'));
+        return view('public.blog.show', compact('article'  , 'relatedArticles'));
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('promos', function (Blueprint $table) {
-            $table->string('banner_image')->nullable();
+        Schema::table('locations', function (Blueprint $table) {
+            $table->string('map_url')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('promos', function (Blueprint $table) {
+        Schema::table('locations', function (Blueprint $table) {
             //
         });
     }

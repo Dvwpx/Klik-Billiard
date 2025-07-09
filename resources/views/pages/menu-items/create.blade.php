@@ -30,8 +30,8 @@
                     <label for="category">Kategori</label>
                     <select class="form-control" id="category" name="category" required>
                         <option value="">-- Pilih Kategori --</option>
-                        <option value="makanan" {{ old('category', $menu->category ?? '') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
-                        <option value="minuman" {{ old('category', $menu->category ?? '') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                        <option value="Makanan" {{ old('category', $menu->category ?? '') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
+                        <option value="Minuman" {{ old('category', $menu->category ?? '') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
                     </select>
                 </div>
 

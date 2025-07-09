@@ -35,7 +35,7 @@
                         <tr>
                             <td class="py-1">
                                 @if($tournament->poster_image)
-                                <img src="{{ asset('storage/' . $tournament->poster_image) }}" alt="image" />
+                                <img src="{{$tournament->poster_image }}" alt="image" />
                                 @else
                                 <img src="https://via.placeholder.com/150x150.png?text=No+Poster" alt="image" />
                                 @endif

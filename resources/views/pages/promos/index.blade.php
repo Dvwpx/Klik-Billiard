@@ -19,7 +19,7 @@
                     <tbody>
                         @forelse ($promos as $promo)
                         <tr>
-                            <td class="py-1"><img src="{{ asset('storage/' . $promo->banner_image) }}" alt="image" /></td>
+                            <td class="py-1"><img src="{{$promo->banner_image }}" alt="image" /></td>
                             <td>{{ $promo->title }}</td>
                             <td><span class="badge {{ $promo->status == 'active' ? 'badge-success' : 'badge-danger' }}">{{ ucfirst($promo->status) }}</span></td>
                             <td>

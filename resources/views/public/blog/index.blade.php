@@ -20,7 +20,7 @@
                     <a href="{{ route('blog.show', $article->slug) }}" class="d-block">
                         <div class="article-card-img-container">
                             @if($article->featured_image)
-                            <img src="{{ asset('storage/' . $article->featured_image) }}" alt="{{ $article->title }}">
+                            <img src="{{ $article->featured_image }}" alt="{{ $article->title }}">
                             @else
                             <img src="https://via.placeholder.com/400x250.png?text=Klik+Billiard" alt="Klik Billiard">
                             @endif

@@ -78,6 +78,12 @@
                     <label for="phone_number">Nomor Telepon</label>
                     <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ old('phone_number', $location->phone_number) }}">
                 </div>
+                <div class="form-group">
+                    <label for="map_url">Link Google Maps (Navigasi Lokasi)</label>
+                    <input type="url" class="form-control" id="map_url" name="map_url"
+                        placeholder="https://maps.app.goo.gl/..."
+                        value="{{ old('map_url', $location->map_url) }}">
+                </div>
 
                 <div class="form-group">
                     <label for="status">Status</label>

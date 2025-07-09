@@ -39,7 +39,7 @@
                     @if($article->featured_image)
                     <div class="mt-2">
                         <p>Gambar saat ini:</p>
-                        <img src="{{ asset('storage/' . $article->featured_image) }}" alt="Featured Image" style="max-width: 200px;">
+                        <img src="{{$article->featured_image }}" alt="Featured Image" style="max-width: 200px;">
                     </div>
                     @endif
                 </div>

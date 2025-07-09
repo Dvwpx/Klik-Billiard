@@ -5,7 +5,7 @@
 @section('content')
 
 <section class="article-hero" data-aos="fade-in">
-    <div class="article-hero-bg" style="background-image: url('{{ $article->featured_image ? asset('storage/' . $article->featured_image) : 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
+    <div class="article-hero-bg" style="background-image: url('{{ $article->featured_image ?? 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
     <div class="article-hero-overlay"></div>
     <div class="container">
         <div class="row">
@@ -39,7 +39,7 @@
                             <div class="article-card-v2">
                                 <a href="{{ route('blog.show', $related->slug) }}" class="d-block">
                                     <div class="article-card-img-container" style="height: 180px;">
-                                        <img src="{{ $related->featured_image ? asset('storage/' . $related->featured_image) : 'https://via.placeholder.com/400x250.png?text=Klik+Billiard' }}" alt="{{ $related->title }}">
+                                        <img src="{{ $related->featured_image ?? 'https://via.placeholder.com/400x250.png?text=Klik+Billiard' }}" alt="{{ $related->title }}">
                                     </div>
                                     <div class="article-card-body">
                                         <h5 class="article-card-title" style="font-size: 1rem;">{{ Str::limit($related->title, 55) }}</h5>

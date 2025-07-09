@@ -41,7 +41,7 @@
                 <div class="col-lg-6 mb-4 mb-lg-0">
                     <div class="equipment-image-wrapper rounded overflow-hidden shadow">
                         @if($facility->image)
-                        <img src="{{ asset('storage/' . $facility->image) }}" alt="{{ $facility->name }}" class="img-fluid equipment-image">
+                        <img src="{{ $facility->image }}" alt="{{ $facility->name }}" class="img-fluid equipment-image">
                         @else
                         <img src="https://via.placeholder.com/800x500?text=Gambar+Peralatan" alt="Image" class="img-fluid equipment-image">
                         @endif

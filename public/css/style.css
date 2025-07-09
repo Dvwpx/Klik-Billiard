@@ -250,7 +250,7 @@ section {
     margin-bottom: 0.5rem;
 }
 .tournament-card .tournament-status {
-    color: var(--secondary-color);
+    color: #ffffff;
     font-weight: bold;
 }
 .article-card-v2 .article-card-category {
@@ -261,8 +261,8 @@ section {
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 560;
     z-index: 3;
 }
 
