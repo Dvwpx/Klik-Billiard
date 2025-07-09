@@ -33,38 +33,21 @@ class PromoController extends Controller
         ]);
 
         try {
-            // Inisialisasi Cloudinary langsung
-            $cloudinary = new CloudinaryApi([
-                'cloud' => [
-                    'cloud_name' => config('cloudinary.cloud_name'),
-                    'api_key' => config('cloudinary.api_key'),
-                    'api_secret' => config('cloudinary.api_secret'),
-                ]
-            ]);
-
-            $uploadResult = $cloudinary->uploadApi()->upload(
-                $request->file('banner_image')->getRealPath(),
-                [
-                    'folder' => 'klikbilliard/promos'
-                ]
-            );
-
-            $uploadedImageUrl = $request->banner_image_url;
-
             Promo::create([
                 'title' => $request->title,
                 'description' => $request->description,
-                'banner_image' => $uploadedImageUrl,
+                'banner_image' => $request->banner_image_url,
                 'link_url' => $request->link_url,
                 'status' => $request->status,
             ]);
 
             return redirect()->route('promos.index')->with('success', 'Promo berhasil ditambahkan.');
         } catch (\Exception $e) {
-            \Log::error('Cloudinary upload error: ' . $e->getMessage());
-            return back()->withErrors(['banner_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            \Log::error('Store promo failed: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Gagal menyimpan promo: ' . $e->getMessage()]);
         }
     }
+
 
     public function edit(Promo $promo)
     {
