@@ -25,9 +25,9 @@
             <div class="col-lg-7" data-aos="fade-right">
                 <div class="info-card tournament-details">
                     <h4>Detail Turnamen</h4>
-                    <div class="info-item"><i class="ti-calendar"></i><span>{{ \Carbon\Carbon::parse($tournament->start_date)->format('d F Y') }}
+                    <div class="info-item"><i class="ti-calendar"> </i><span>{{ \Carbon\Carbon::parse($tournament->start_date)->format('d F Y') }}
                             @if($tournament->end_date) - {{ \Carbon\Carbon::parse($tournament->end_date)->format('d F Y') }}@endif</span></div>
-                    <div class="info-item"><i class="ti-location-pin"></i><span>{{ $tournament->location->name ?? 'Akan diumumkan' }}</span></div>
+                    <div class="info-item"><i class="ti-location-pin"> </i><span>{{ $tournament->location->name ?? 'Akan diumumkan' }}</span></div>
                 </div>
 
                 @if($tournament->description)
