@@ -33,22 +33,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Banner Promo Baru (Opsional)</label>
-                    <input type="file" name="banner_image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Pilih Gambar Banner Baru">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                    </div>
-                    <small class="form-text text-muted">Kosongkan jika tidak ingin mengganti banner yang sudah ada.</small>
+                    <label>Upload Banner Promo Baru (Opsional)</label><br>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+
+                    <input type="hidden" name="banner_image_url" id="banner_image_url" value="{{ old('banner_image_url', $promo->banner_image ?? '') }}">
+
                     @if($promo->banner_image)
-                    <div class="mt-2">
+                    <div class="mb-2" id="preview_image">
                         <p>Banner saat ini:</p>
-                        <img src="{{$promo->banner_image}}" alt="Banner Promo" style="max-width: 300px; border-radius: 5px;">
+                        <img src="{{ $promo->banner_image }}" id="image_preview_tag" style="max-width: 300px; border-radius: 8px;">
+                    </div>
+                    @else
+                    <div id="preview_image" style="display: none;">
+                        <img src="" id="image_preview_tag" style="max-width: 300px; border-radius: 8px;">
                     </div>
                     @endif
+
+                    <small class="form-text text-muted mt-2">Kosongkan jika tidak ingin mengganti banner yang sudah ada. Ukuran rekomendasi: 1920x1080 pixel.</small>
                 </div>
+
+
 
                 <div class="form-group">
                     <label for="link_url">URL Tujuan (Opsional)</label>
@@ -70,3 +74,33 @@
     </div>
 </div>
 @endsection
+
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const uploadWidget = cloudinary.createUploadWidget({
+            cloudName: 'dvlrqchqs',
+            uploadPreset: 'default_preset',
+            folder: 'klikbilliard/promos',
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            maxFileSize: 10485760 // 10MB
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                const imageUrl = result.info.secure_url;
+                document.getElementById('banner_image_url').value = imageUrl;
+                document.getElementById('image_preview_tag').src = imageUrl;
+                document.getElementById('preview_image').style.display = 'block';
+            }
+        });
+
+        const btn = document.getElementById("upload_widget");
+        if (btn) {
+            btn.addEventListener("click", function() {
+                uploadWidget.open();
+            });
+        } else {
+            console.warn("Tombol upload_widget tidak ditemukan");
+        }
+    });
+</script>

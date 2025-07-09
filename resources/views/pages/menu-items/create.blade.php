@@ -5,10 +5,9 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Form Tambah Menu Baru</h4>
-            <p class="card-description">
-                Masukkan detail item menu baru untuk Klik Billiard.
-            </p>
+            <p class="card-description">Masukkan detail item menu baru untuk Klik Billiard.</p>
 
+            {{-- Menampilkan Pesan Error Validasi --}}
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -19,8 +18,9 @@
             </div>
             @endif
 
-            <form class="forms-sample" method="POST" action="{{ route('menu-items.store') }}" enctype="multipart/form-data">
+            <form class="forms-sample" method="POST" action="{{ route('menu-items.store') }}">
                 @csrf
+
                 <div class="form-group">
                     <label for="name">Nama Menu</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Contoh: Nasi Goreng Gila" value="{{ old('name') }}" required>
@@ -30,8 +30,8 @@
                     <label for="category">Kategori</label>
                     <select class="form-control" id="category" name="category" required>
                         <option value="">-- Pilih Kategori --</option>
-                        <option value="Makanan" {{ old('category', $menu->category ?? '') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
-                        <option value="Minuman" {{ old('category', $menu->category ?? '') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
+                        <option value="Makanan" {{ old('category') == 'Makanan' ? 'selected' : '' }}>Makanan</option>
+                        <option value="Minuman" {{ old('category') == 'Minuman' ? 'selected' : '' }}>Minuman</option>
                     </select>
                 </div>
 
@@ -41,13 +41,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Gambar Menu</label>
-                    <input type="file" name="image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Gambar">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
+                    <label for="image">Gambar Menu</label><br>
+                    {{-- ID tombol disamakan dengan yang ada di JavaScript --}}
+                    <button type="button" class="btn btn-primary mb-2" id="upload-widget">Upload Gambar via Cloudinary</button>
+                    <input type="hidden" name="image" id="image" value="{{ old('image') }}">
+                    
+                    {{-- Menambahkan elemen untuk pratinjau gambar --}}
+                    <div id="image-preview" class="mt-2">
+                        @if(old('image'))
+                            <img src="{{ old('image') }}" alt="Image Preview" style="max-width: 200px; height: auto; display: block;">
+                        @endif
                     </div>
                 </div>
 
@@ -70,4 +73,40 @@
         </div>
     </div>
 </div>
+
+{{-- Cloudinary Upload Widget untuk Menu Items --}}
+<script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const uploadWidget = cloudinary.createUploadWidget({
+            cloudName: '{{ config('cloudinary.cloud_name') }}',
+            uploadPreset: '{{ config('cloudinary.upload_preset') }}',
+            folder: 'klikbilliard/menu-items',
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            maxFileSize: 10485760 // 10MB
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                const imageUrl = result.info.secure_url;
+                // Mengisi input hidden dengan URL gambar
+                document.getElementById('image').value = imageUrl;
+
+                // Menampilkan pratinjau gambar
+                const imagePreviewContainer = document.getElementById('image-preview');
+                imagePreviewContainer.innerHTML = `<img src="${imageUrl}" alt="Image Preview" style="max-width: 200px; height: auto; display: block;">`;
+            }
+        });
+
+        // ID disamakan dengan yang ada di HTML
+        const btn = document.getElementById("upload-widget");
+        if (btn) {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault(); // Mencegah perilaku default jika ada
+                uploadWidget.open();
+            });
+        } else {
+            console.error("Tombol dengan ID 'upload-widget' tidak ditemukan.");
+        }
+    });
+</script>
 @endsection

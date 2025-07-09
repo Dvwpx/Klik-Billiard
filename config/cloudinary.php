@@ -5,6 +5,7 @@ return [
     'api_key' => env('CLOUDINARY_API_KEY'),
     'api_secret' => env('CLOUDINARY_API_SECRET'),
     'secure_url' => env('CLOUDINARY_SECURE_URL', true),
+    'upload_preset' => env('CLOUDINARY_UPLOAD_PRESET', 'default_preset'),
     'file_upload' => [
         'overwrite' => false,
         'notify_url' => null,

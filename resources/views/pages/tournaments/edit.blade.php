@@ -19,28 +19,30 @@
             </div>
             @endif
 
-            <form class="forms-sample" method="POST" action="{{ route('tournaments.update', $tournament->id) }}" enctype="multipart/form-data">
+            <form class="forms-sample" method="POST" action="{{ route('tournaments.update', $tournament->id) }}">
                 @csrf
                 @method('PUT')
+
                 <div class="form-group">
                     <label for="name">Nama Turnamen</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $tournament->name) }}" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Poster Turnamen</label>
-                    <input type="file" name="poster_image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Poster Baru (Opsional)">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                    </div>
+                    <label>Upload Poster Turnamen</label><br>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+                    <input type="hidden" name="poster_image_url" id="poster_image_url" value="{{ old('poster_image_url', $tournament->poster_image) }}">
+
+
+                    {{-- Poster lama --}}
                     @if($tournament->poster_image)
                     <div class="mt-2">
-                        <p>Poster saat ini:</p><img src="{{ asset('storage/' . $tournament->poster_image) }}" alt="Poster" style="max-width: 200px;">
+                        <p>Poster saat ini:</p>
+                        <img src="{{ $tournament->poster_image }}" alt="Poster Lama" style="max-width: 200px;">
                     </div>
                     @endif
+
+                    <small class="form-text text-muted mt-2">Gambar baru akan menggantikan yang lama jika diunggah.</small>
                 </div>
 
                 <div class="row">
@@ -99,3 +101,27 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const uploadWidget = cloudinary.createUploadWidget({
+        cloudName: 'dvlrqchqs', // Ganti sesuai cloud_name kamu
+        uploadPreset: 'default_preset', // Sesuaikan juga jika berbeda
+        folder: 'klikbilliard/tournaments',
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        maxFileSize: 10485760 // 10 MB
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            const imageUrl = result.info.secure_url;
+            document.getElementById('poster_image_url').value = imageUrl;
+            document.getElementById('image_preview_tag').src = imageUrl;
+        }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function() {
+        uploadWidget.open();
+    }, false);
+</script>
+@endpush

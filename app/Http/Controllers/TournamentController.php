@@ -40,29 +40,8 @@ class TournamentController extends Controller
         ]);
 
         $imagePath = null;
-        if ($request->hasFile('poster_image')) {
-            try {
-                // Inisialisasi Cloudinary langsung
-                $cloudinary = new CloudinaryApi([
-                    'cloud' => [
-                        'cloud_name' => config('cloudinary.cloud_name'),
-                        'api_key' => config('cloudinary.api_key'),
-                        'api_secret' => config('cloudinary.api_secret'),
-                    ]
-                ]);
-
-                $uploadResult = $cloudinary->uploadApi()->upload(
-                    $request->file('poster_image')->getRealPath(),
-                    [
-                        'folder' => 'klikbilliard/tournaments'
-                    ]
-                );
-
-                $imagePath = $uploadResult['secure_url'];
-            } catch (\Exception $e) {
-                Log::error('Cloudinary upload error: ' . $e->getMessage());
-                return back()->withErrors(['poster_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
-            }
+        if ($request->filled('poster_image_url')) {
+            $imagePath = $request->poster_image_url;
         }
 
         Tournament::create([
@@ -109,35 +88,11 @@ class TournamentController extends Controller
         $tournament->location_id = $request->location_id;
         $tournament->winner_id = $request->winner_id;
 
-        if ($request->hasFile('poster_image')) {
-            try {
-                // Inisialisasi Cloudinary langsung
-                $cloudinary = new CloudinaryApi([
-                    'cloud' => [
-                        'cloud_name' => config('cloudinary.cloud_name'),
-                        'api_key' => config('cloudinary.api_key'),
-                        'api_secret' => config('cloudinary.api_secret'),
-                    ]
-                ]);
-
-                // Upload gambar baru ke Cloudinary
-                $uploadResult = $cloudinary->uploadApi()->upload(
-                    $request->file('poster_image')->getRealPath(),
-                    [
-                        'folder' => 'klikbilliard/tournaments'
-                    ]
-                );
-
-                // Hapus gambar lama dari Cloudinary (opsional)
-                if ($tournament->poster_image) {
-                    $this->deleteFromCloudinary($tournament->poster_image);
-                }
-
-                $tournament->poster_image = $uploadResult['secure_url'];
-            } catch (\Exception $e) {
-                Log::error('Cloudinary upload error: ' . $e->getMessage());
-                return back()->withErrors(['poster_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+        if ($request->filled('poster_image_url')) {
+            if ($tournament->poster_image) {
+                $this->deleteFromCloudinary($tournament->poster_image);
             }
+            $tournament->poster_image = $request->poster_image_url;
         }
 
         $tournament->save();

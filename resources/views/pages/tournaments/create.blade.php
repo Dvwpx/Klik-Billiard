@@ -27,14 +27,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Poster Turnamen</label>
-                    <input type="file" name="poster_image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Poster">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
-                    </div>
+                    <label>Upload Poster Turnamen</label><br>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+                    <input type="hidden" name="poster_image_url" id="poster_image_url" value="{{ old('poster_image_url') }}">
+                    <small class="form-text text-muted mt-2">Ukuran rekomendasi: 1920x1080 pixel.</small>
                 </div>
 
                 <div class="row">
@@ -93,3 +89,28 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    const uploadWidget = cloudinary.createUploadWidget({
+        cloudName: 'dvlrqchqs', // Ganti dengan cloud_name kamu
+        uploadPreset: 'default_preset', // Ganti juga ini kalau kamu buat preset baru
+        folder: 'klikbilliard/tournaments',
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        maxFileSize: 10485760 // 10 MB
+    }, (error, result) => {
+        if (!error && result && result.event === "success") {
+            const imageUrl = result.info.secure_url;
+            document.getElementById('poster_image_url').value = imageUrl;
+            document.getElementById('image_preview_tag').src = imageUrl;
+            document.getElementById('preview_image').style.display = 'block';
+        }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function() {
+        uploadWidget.open();
+    }, false);
+</script>
+@endpush

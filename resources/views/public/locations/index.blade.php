@@ -9,14 +9,6 @@
     <div class="container">
         <h1 class="display-4 text-white">Temukan Arena Terbaikmu</h1>
         <p class="lead text-muted">Direktori tempat biliar paling lengkap dan terkurasi.</p>
-
-        <div class="filter-bar mt-5 col-lg-8 mx-auto" data-aos="fade-up" data-aos-delay="200">
-            {{-- Nanti kita bisa fungsikan filter ini --}}
-            <form class="form-inline">
-                <input class="form-control flex-grow-1 mr-2" type="search" placeholder="Cari nama lokasi atau kota..." aria-label="Search">
-                <button class="btn btn-primary" type="submit">Cari</button>
-            </form>
-        </div>
     </div>
 </section>
 
@@ -29,7 +21,7 @@
                     <div class="card location-card-v2">
                         <div class="img-wrapper">
                             @if($location->featured_image)
-                            <img src="{{ asset('storage/' . $location->featured_image) }}" alt="{{ $location->name }}">
+                            <img src="{{ $location->featured_image }}" alt="{{ $location->name }}">
                             @else
                             <img src="https://via.placeholder.com/400x500.png?text=Klik+Billiard" alt="Klik Billiard">
                             @endif

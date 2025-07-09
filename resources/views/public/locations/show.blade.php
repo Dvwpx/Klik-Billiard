@@ -6,7 +6,7 @@
 
 {{-- Hero Section dengan gambar utama lokasi --}}
 <section class="article-hero" data-aos="fade-in">
-    <div class="article-hero-bg" style="background-image: url('{{ $location->featured_image ? asset('storage/' . $location->featured_image) : 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
+<div class="article-hero-bg" style="background-image: url('{{ $location->featured_image ? $location->featured_image : 'https://via.placeholder.com/1920x800.png?text=Klik+Billiard' }}');"></div>
     <div class="article-hero-overlay"></div>
     <div class="container">
         <div class="row">

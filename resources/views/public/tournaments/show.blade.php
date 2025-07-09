@@ -42,7 +42,7 @@
                     @if($tournament->winner)
                     <div class="winner-card">
                         <h5 class="winner-title">🏆 Champion 🏆</h5>
-                        @if($tournament->winner->profile_image)<img src="{{ asset('storage/' . $tournament->winner->profile_image) }}" alt="{{ $tournament->winner->name }}" class="winner-avatar">
+                        @if($tournament->winner->profile_image)<img src="{{ $tournament->winner->profile_image }}" alt="{{ $tournament->winner->name }}" class="winner-avatar">
                         @else<img src="https://via.placeholder.com/120x120.png?text=🏆" alt="Winner" class="winner-avatar">@endif
                         <h3 class="winner-name">{{ $tournament->winner->name }}</h3>
                         @if($tournament->winner->nickname)<p class="mb-0">"{{ $tournament->winner->nickname }}"</p>@endif

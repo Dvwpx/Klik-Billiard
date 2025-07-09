@@ -37,8 +37,9 @@
                     <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
                     <input type="hidden" name="banner_image_url" id="banner_image_url" value="{{ old('banner_image_url') }}">
                     <div id="preview_image" style="display: none;">
-                        <img src="" id="image_preview_tag" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+                        <img src="" id="image_preview_tag" style="max-width: 150px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     </div>
+                    
                     <small class="form-text text-muted mt-2">Gambar akan menjadi background seksi promo. Ukuran rekomendasi: 1920x1080 pixel.</small>
                 </div>
 

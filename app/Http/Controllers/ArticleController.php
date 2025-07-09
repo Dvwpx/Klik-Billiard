@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Cloudinary\Cloudinary as CloudinaryApi;
 
@@ -17,8 +16,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        // Mengambil data artikel, diurutkan dari yang terbaru
         $articles = Article::with('user')->latest()->get();
-
         return view('pages.articles.index', ['articles' => $articles]);
     }
 
@@ -35,61 +34,34 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. Validasi Input Form
+        // 1. Validasi Input (featured_image sekarang divalidasi sebagai string URL)
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:articles,title',
             'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'featured_image' => 'nullable|string|url', // FIX: Validasi sebagai URL
             'status' => 'required|in:draft,published',
         ]);
 
-        // 2. Proses Upload Gambar (jika ada)
-        $imagePath = null;
-        if ($request->hasFile('featured_image')) {
-            try {
-                // Inisialisasi Cloudinary langsung
-                $cloudinary = new CloudinaryApi([
-                    'cloud' => [
-                        'cloud_name' => config('cloudinary.cloud_name'),
-                        'api_key' => config('cloudinary.api_key'),
-                        'api_secret' => config('cloudinary.api_secret'),
-                    ]
-                ]);
-
-                $uploadResult = $cloudinary->uploadApi()->upload(
-                    $request->file('featured_image')->getRealPath(),
-                    [
-                        'folder' => 'klikbilliard/articles'
-                    ]
-                );
-
-                $imagePath = $uploadResult['secure_url'];
-            } catch (\Exception $e) {
-                Log::error('Cloudinary upload error: ' . $e->getMessage());
-                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
-            }
-        }
-
-        // 3. Membuat Slug dan Simpan ke Database
+        // 2. Langsung gunakan URL dari Cloudinary Widget
         Article::create([
             'title' => $validatedData['title'],
-            'slug' => Str::slug($validatedData['title']), // Membuat slug dari judul
+            'slug' => Str::slug($validatedData['title']),
             'content' => $validatedData['content'],
-            'featured_image' => $imagePath,
+            'featured_image' => $validatedData['featured_image'] ?? null, // FIX: Ambil URL langsung
             'status' => $validatedData['status'],
-            'user_id' => Auth::id(), // Mengambil ID user yang sedang login
+            'user_id' => Auth::id(),
         ]);
 
-        // 4. Redirect dengan pesan sukses
         return redirect()->route('articles.index')->with('success', 'Artikel baru berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Article $article)
     {
-        //
+        // Menampilkan detail satu artikel
+        return view('pages.articles.show', ['article' => $article]);
     }
 
     /**
@@ -105,11 +77,11 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        // 1. Validasi Input Form
+        // 1. Validasi Input
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:articles,title,' . $article->id,
             'content' => 'required|string',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'featured_image' => 'nullable|string|url', // FIX: Validasi sebagai URL
             'status' => 'required|in:draft,published',
         ]);
 
@@ -121,42 +93,20 @@ class ArticleController extends Controller
             'status' => $validatedData['status'],
         ];
 
-        // 3. Proses Upload Gambar Baru (jika ada)
-        if ($request->hasFile('featured_image')) {
-            try {
-                // Inisialisasi Cloudinary langsung
-                $cloudinary = new CloudinaryApi([
-                    'cloud' => [
-                        'cloud_name' => config('cloudinary.cloud_name'),
-                        'api_key' => config('cloudinary.api_key'),
-                        'api_secret' => config('cloudinary.api_secret'),
-                    ]
-                ]);
-
-                // Upload gambar baru ke Cloudinary
-                $uploadResult = $cloudinary->uploadApi()->upload(
-                    $request->file('featured_image')->getRealPath(),
-                    [
-                        'folder' => 'klikbilliard/articles'
-                    ]
-                );
-
-                // Hapus gambar lama dari Cloudinary (opsional)
-                if ($article->featured_image) {
-                    $this->deleteFromCloudinary($article->featured_image);
-                }
-
-                $updateData['featured_image'] = $uploadResult['secure_url'];
-            } catch (\Exception $e) {
-                Log::error('Cloudinary upload error: ' . $e->getMessage());
-                return back()->withErrors(['featured_image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+        // 3. Cek jika ada URL gambar baru dari Cloudinary
+        $newImageUrl = $request->input('featured_image');
+        if ($newImageUrl && $newImageUrl !== $article->featured_image) {
+            // Hapus gambar lama dari Cloudinary jika ada
+            if ($article->featured_image) {
+                $this->deleteFromCloudinary($article->featured_image);
             }
+            // Tetapkan URL gambar baru
+            $updateData['featured_image'] = $newImageUrl; // FIX: Gunakan URL baru
         }
 
         // 4. Update data di database
         $article->update($updateData);
 
-        // 5. Redirect dengan pesan sukses
         return redirect()->route('articles.index')->with('success', 'Artikel berhasil diperbarui.');
     }
 
@@ -166,58 +116,40 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         try {
-            // Hapus gambar dari Cloudinary
+            // Hapus gambar dari Cloudinary jika ada
             if ($article->featured_image) {
                 $this->deleteFromCloudinary($article->featured_image);
             }
-
-            // Hapus data artikel dari database
             $article->delete();
-
             return redirect()->route('articles.index')->with('success', 'Artikel berhasil dihapus.');
         } catch (\Exception $e) {
-            Log::error('Cloudinary delete error: ' . $e->getMessage());
-            return back()->withErrors(['error' => 'Gagal menghapus artikel: ' . $e->getMessage()]);
+            Log::error('Article deletion error: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menghapus artikel.');
         }
     }
 
-    /**
-     * Helper method untuk menghapus gambar dari Cloudinary
-     */
+    // --- Helper Methods untuk Cloudinary ---
+
     private function deleteFromCloudinary($imageUrl)
     {
+        // Fungsi ini sudah benar, tidak perlu diubah
         try {
-            // Inisialisasi Cloudinary
-            $cloudinary = new CloudinaryApi([
-                'cloud' => [
-                    'cloud_name' => config('cloudinary.cloud_name'),
-                    'api_key' => config('cloudinary.api_key'),
-                    'api_secret' => config('cloudinary.api_secret'),
-                ]
-            ]);
-
-            // Extract public_id dari URL
+            $cloudinary = new CloudinaryApi(config('cloudinary.url'));
             $publicId = $this->extractPublicIdFromUrl($imageUrl);
 
             if ($publicId) {
                 $cloudinary->uploadApi()->destroy($publicId);
             }
         } catch (\Exception $e) {
-            Log::error('Error deleting from Cloudinary: ' . $e->getMessage());
+            Log::error('Cloudinary delete error: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Helper method untuk extract public_id dari Cloudinary URL
-     */
     private function extractPublicIdFromUrl($url)
     {
-        // URL format: https://res.cloudinary.com/cloud_name/image/upload/v1234567890/folder/filename.jpg
-        // Public ID: folder/filename (tanpa ekstensi)
-
-        $pattern = '/\/v\d+\/(.+)\./';
+        // Fungsi ini sudah benar, tidak perlu diubah
+        $pattern = '/\/v\d+\/(.+)\.[a-zA-Z0-9]+$/';
         preg_match($pattern, $url, $matches);
-
-        return isset($matches[1]) ? $matches[1] : null;
+        return $matches[1] ?? null;
     }
 }

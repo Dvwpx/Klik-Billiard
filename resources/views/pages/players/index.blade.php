@@ -33,7 +33,7 @@
                         <tr>
                             <td class="py-1">
                                 @if($player->profile_image)
-                                <img src="{{ asset('storage/' . $player->profile_image) }}" alt="image" />
+                                <img src="{{$player->profile_image }}" alt="image" />
                                 @else
                                 <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="image" />
                                 @endif

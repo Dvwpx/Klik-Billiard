@@ -31,13 +31,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Foto Profil</label>
-                    <input type="file" name="profile_image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Foto">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                        </span>
+                    <label>Upload Foto Profil</label><br>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload ke Cloudinary</button>
+                    <input type="hidden" name="profile_image" id="profile_image" value="{{ old('profile_image') }}">
+                    <div id="preview_image" style="display: none;">
+                        <img src="" id="image_preview_tag" style="max-width: 150px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
                     </div>
                 </div>
 
@@ -67,3 +65,34 @@
     </div>
 </div>
 @endsection
+
+{{-- Cloudinary Upload Widget untuk Players --}}
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const uploadWidget = cloudinary.createUploadWidget({
+            cloudName: '{{ config('cloudinary.cloud_name') }}',
+            uploadPreset: '{{ config('cloudinary.upload_preset') }}', // dari config
+            folder: 'klikbilliard/players',
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            maxFileSize: 5242880 // 5MB
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                const imageUrl = result.info.secure_url;
+                document.getElementById('profile_image').value = imageUrl;
+                document.getElementById('image_preview_tag').src = imageUrl;
+                document.getElementById('preview_image').style.display = 'block';
+            }
+        });
+
+        const btn = document.getElementById("upload_widget");
+        if (btn) {
+            btn.addEventListener("click", function () {
+                uploadWidget.open();
+            });
+        } else {
+            console.warn("Tombol upload_widget tidak ditemukan");
+        }
+    });
+</script>
