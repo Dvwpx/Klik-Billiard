@@ -34,7 +34,7 @@
 
                 <div class="form-group">
                     <label>Upload Banner Promo Baru (Opsional)</label><br>
-                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar</button>
 
                     <input type="hidden" name="banner_image_url" id="banner_image_url" value="{{ old('banner_image_url', $promo->banner_image ?? '') }}">
 

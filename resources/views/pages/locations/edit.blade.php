@@ -40,7 +40,7 @@
           <label>Gambar Utama</label>
           <input type="hidden" id="featured_image" name="featured_image" value="{{ old('featured_image', $location->featured_image) }}">
           <div class="mb-2">
-            <button type="button" class="btn btn-primary" id="upload_widget">Upload Gambar Baru</button>
+            <button type="button" class="btn btn-primary" id="upload_widget">Upload Gambar</button>
           </div>
           <div id="preview_container" style="{{ $location->featured_image ? '' : 'display:none;' }}">
             <p>Preview:</p>

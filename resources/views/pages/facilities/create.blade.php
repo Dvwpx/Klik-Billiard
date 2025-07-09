@@ -37,7 +37,7 @@
                     <div class="input-group col-xs-12">
                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Gambar">
                         <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            <button class="file-upload-browse btn btn-primary" type="button">Upload Gambar</button>
                         </span>
                     </div>
                 </div>
