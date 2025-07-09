@@ -1,0 +1,10 @@
+{
+    "build": {
+        "builder": "heroku/buildpacks:20"
+    },
+    "deploy": {
+        "restartPolicyType": "ON_FAILURE",
+        "sleepApplication": false,
+        "numReplicas": 1
+    }
+}
