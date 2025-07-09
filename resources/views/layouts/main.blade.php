@@ -270,6 +270,7 @@
   <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>
   <!-- End custom js for this page-->
 </body>
+@stack('scripts')
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const toggleButton = document.querySelector('[data-toggle="offcanvas"]');

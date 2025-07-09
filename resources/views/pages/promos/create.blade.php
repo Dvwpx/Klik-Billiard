@@ -65,28 +65,32 @@
 </div>
 @endsection
 
-@push('scripts')
-<!-- Cloudinary Upload Widget -->
 <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
-<script type="text/javascript">
-    const uploadWidget = cloudinary.createUploadWidget({
-        cloudName: 'dvlrqchqs',
-        uploadPreset: 'default_preset', // Ganti sesuai preset kamu di dashboard Cloudinary
-        folder: 'klikbilliard/promos',
-        sources: ['local', 'url', 'camera'],
-        multiple: false,
-        maxFileSize: 10485760 // 10 MB
-    }, (error, result) => {
-        if (!error && result && result.event === "success") {
-            const imageUrl = result.info.secure_url;
-            document.getElementById('banner_image_url').value = imageUrl;
-            document.getElementById('image_preview_tag').src = imageUrl;
-            document.getElementById('preview_image').style.display = 'block';
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const uploadWidget = cloudinary.createUploadWidget({
+            cloudName: 'dvlrqchqs',
+            uploadPreset: 'default_preset',
+            folder: 'klikbilliard/promos',
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            maxFileSize: 10485760 // 10MB
+        }, (error, result) => {
+            if (!error && result && result.event === "success") {
+                const imageUrl = result.info.secure_url;
+                document.getElementById('banner_image_url').value = imageUrl;
+                document.getElementById('image_preview_tag').src = imageUrl;
+                document.getElementById('preview_image').style.display = 'block';
+            }
+        });
+
+        const btn = document.getElementById("upload_widget");
+        if (btn) {
+            btn.addEventListener("click", function() {
+                uploadWidget.open();
+            });
+        } else {
+            console.warn("Tombol upload_widget tidak ditemukan");
         }
     });
-
-    document.getElementById("upload_widget").addEventListener("click", function() {
-        uploadWidget.open();
-    }, false);
 </script>
-@endpush
