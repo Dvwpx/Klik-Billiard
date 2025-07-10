@@ -1386,7 +1386,7 @@ section {
     .promo-gallery-card {
         touch-action: manipulation;
         /* Pastikan container tidak terpotong - diperbesar 25% */
-        min-height: 500px;
+        min-height: 460x;
         display: block;
         position: relative;
         overflow: hidden;
@@ -1421,7 +1421,7 @@ section {
 /* Fix untuk viewport mobile */
 @media (max-width: 414px) {
     .promo-gallery-card {
-        height: 625px; /* Diperbesar 25% dari 500px */
+        height: 475px; /* Diperbesar 25% dari 500px */
         margin-bottom: 20px;
     }
 
