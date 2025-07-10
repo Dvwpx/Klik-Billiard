@@ -1421,7 +1421,7 @@ section {
 /* Fix untuk viewport mobile */
 @media (max-width: 414px) {
     .promo-gallery-card {
-        height: 475px; /* Diperbesar 25% dari 500px */
+        height: 440px; /* Diperbesar 25% dari 500px */
         margin-bottom: 20px;
     }
 
@@ -1434,7 +1434,7 @@ section {
 /* Fix untuk iPhone dan device kecil */
 @media (max-width: 375px) {
     .promo-gallery-card {
-        height: 600px; /* Diperbesar 25% dari 480px */
+        height: 430px; /* Diperbesar 25% dari 480px */
     }
 }
 
