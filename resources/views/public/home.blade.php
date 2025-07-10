@@ -31,7 +31,7 @@
     </section>
 
     {{-- Seksi Galeri Promo --}}
-    <section id="promo" class="section-padding">
+<section id="promo" class="section-padding">
     <div class="container">
         <div class="row text-center">
             <div class="col-12">
@@ -40,21 +40,24 @@
         </div>
         <div class="row justify-content-center">
             @forelse ($activePromos as $promo)
-                <div class="col-lg-4 col-md-6 col-12 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
-                    <a href="{{ $promo->link_url ?? '#' }}"
-                       target="_blank"
-                       class="promo-gallery-card"
-                       aria-label="Promo {{ $promo->title }}">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 promo-item" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
+                <a href="{{ $promo->link_url ?? '#' }}"
+                   target="_blank"
+                   class="promo-gallery-card"
+                   aria-label="Promo {{ $promo->title }}">
+                    <div class="promo-image-container">
                         <img src="{{ $promo->banner_image }}"
                              alt="{{ $promo->title }}"
                              loading="lazy"
-                             decoding="async">
-                    </a>
-                </div>
+                             decoding="async"
+                             class="promo-image">
+                    </div>
+                </a>
+            </div>
             @empty
-                <div class="col-12 text-center">
-                    <p class="text-muted">Saat ini belum ada promo spesial. Cek kembali nanti!</p>
-                </div>
+            <div class="col-12 text-center">
+                <p class="text-muted">Saat ini belum ada promo spesial. Cek kembali nanti!</p>
+            </div>
             @endforelse
         </div>
     </div>
@@ -462,4 +465,42 @@
         font-size: 0.9rem;
     }
 }
+/* --- Perbaikan Tampilan Mobile untuk Galeri Promo --- */
+
+/* Atur kontainer gambar agar memiliki rasio aspek yang konsisten */
+.promo-image-container {
+    position: relative;
+    width: 100%;
+    /* Atur rasio aspek di sini. Contoh: 1 / 1 untuk kotak, 4 / 3, atau 16 / 9.
+       Padding-top dengan persen adalah trik lama untuk rasio aspek.
+       Misal: padding-top: 100% untuk rasio 1:1 (persegi).
+       Sesuaikan nilainya sesuai desain yang Anda inginkan. */
+    padding-top: 125%; /* Contoh untuk gambar yang sedikit lebih tinggi dari lebarnya */
+    overflow: hidden;
+    border-radius: 8px; /* Opsional: untuk sudut yang melengkung */
+    background-color: #f0f0f0; /* Warna placeholder saat gambar loading */
+}
+
+/* Jadikan gambar mengisi seluruh kontainer */
+.promo-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Properti kunci untuk mengatasi gambar terpotong */
+    object-fit: cover; /* Memastikan gambar menutupi area tanpa merusak rasio aspek */
+    object-position: center; /* Memusatkan gambar di dalam kontainer */
+}
+
+/* Kita bisa juga menggunakan media query jika ingin aturan ini HANYA berlaku di mobile */
+@media (max-width: 767px) {
+    .promo-image-container {
+        /* Anda bisa mengubah rasio aspek khusus untuk mobile jika perlu */
+        /* padding-top: 125%; */
+    }
+}
+
+
 </style>

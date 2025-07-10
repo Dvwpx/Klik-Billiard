@@ -1153,7 +1153,7 @@ section {
     background-color: #fff;
     width: 100%;
     /* Tinggi yang diperbesar 25% dari 450px = 562px */
-    height: 460px;
+    height: 450px;
     /* Tambahan margin untuk jarak antar gambar */
     margin-bottom: 40px;
     position: relative;
@@ -1200,7 +1200,7 @@ section {
 /* Responsive adjustments - Mobile First */
 @media (max-width: 768px) {
     .promo-gallery-card {
-        height: 625px; /* Diperbesar 25% dari 500px */
+        /* height: 625px; Diperbesar 25% dari 500px */
         margin-bottom: 25px;
         border-radius: 15px;
         /* Kurangi efek hover untuk mobile */
@@ -1221,7 +1221,7 @@ section {
 
 @media (max-width: 576px) {
     .promo-gallery-card {
-        height: 687px; /* Diperbesar 25% dari 550px */
+        /* height: 687px; Diperbesar 25% dari 550px */
         margin-bottom: 20px;
         border-radius: 12px;
         /* Pastikan gambar full */
@@ -1257,7 +1257,7 @@ section {
 /* Extra small devices (phones < 480px) */
 @media (max-width: 480px) {
     .promo-gallery-card {
-        height: 625px; /* Diperbesar 25% dari 500px */
+        /* height: 625px; Diperbesar 25% dari 500px */
         margin-bottom: 15px;
         border-radius: 10px;
     }
@@ -1361,7 +1361,7 @@ section {
 /* Optimasi untuk mobile portrait */
 @media (max-width: 480px) and (orientation: portrait) {
     .promo-gallery-card {
-        height: 650px; /* Diperbesar 25% dari 520px */
+        height: 510px; /* Diperbesar 25% dari 520px */
         width: 100%;
     }
 
@@ -1386,7 +1386,7 @@ section {
     .promo-gallery-card {
         touch-action: manipulation;
         /* Pastikan container tidak terpotong - diperbesar 25% */
-        min-height: 687px;
+        min-height: 500px;
         display: block;
         position: relative;
         overflow: hidden;
