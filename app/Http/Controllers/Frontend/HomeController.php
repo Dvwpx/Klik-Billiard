@@ -24,7 +24,7 @@ class HomeController extends Controller
             ['icon' => 'fas fa-mug-hot', 'name' => 'Cafe & Resto'],
             ['icon' => 'fas fa-smoking', 'name' => 'Smoking Area'],
             ['icon' => 'fas fa-restroom', 'name' => 'Toilet Bersih'],
-            ['icon' => 'fas fa-solid fa-ban-smoking', 'name' => 'Area Ramah Anak'],
+            ['icon' => 'fas fa-solid fa-ban-smoking', 'name' => 'Vape Only'],
         ];
 
         // Ambil data peralatan dari DB
