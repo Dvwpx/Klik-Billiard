@@ -502,5 +502,17 @@
     }
 }
 
+@media (max-width: 576px) {
+    .location-info-side .subtitle {
+       font-size: 1rem; /* Contoh untuk gambar yang lebih tinggi di mobile */
+    }
+    .location-info-side .title {
+        font-size: 2.5rem; /* Ukuran judul yang lebih kecil di mobile */
+    }
+    .location-info-side .address {
+        font-size: 1.2rem; /* Ukuran alamat yang lebih kecil di mobile */
+    }
+}
+
 
 </style>
