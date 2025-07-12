@@ -12,20 +12,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="/">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="/lokasi">Lokasi</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="/fasilitas">Fasilitas</a></li>
-                <li class="nav-item"><a class="nav-link smooth-scroll" href="/menu">Menu F&B</a></li>
-                {{-- Link ke Halaman Terpisah --}}
-                <li class="nav-item"><a class="nav-link" href="{{ route('tournaments.public.index') }}">Turnamen</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('blog.index') }}">News</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('/') ? 'active' : '' }}" href="/">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('lokasi') ? 'active' : '' }}" href="/lokasi">Lokasi</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('fasilitas') ? 'active' : '' }}" href="/fasilitas">Fasilitas</a></li>
+                <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('menu') ? 'active' : '' }}" href="/menu">Menu F&B</a></li>
+                <li class="nav-item"><a class="nav-link {{ Request::is('tournaments*') ? 'active' : '' }}" href="{{ route('tournaments.public.index') }}">Turnamen</a></li>
+                <li class="nav-item"><a class="nav-link {{ Request::is('blog*') ? 'active' : '' }}" href="{{ route('blog.index') }}">News</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <style>
-    /* Ukuran logo khusus navbar */
+     /* Ukuran logo khusus navbar (kode Anda yang sudah ada) */
     .klik-logo {
         height: 85px;
         width: auto;
@@ -47,8 +46,29 @@
         color: #00aaff !important;
         /* Bisa kamu ganti ke biru lain sesuai brand */
     }
+    
+    /* ======================================= */
+    /* == CSS BARU UNTUK NAVIGASI AKTIF == */
+    /* ======================================= */
 
-    /* Responsive */
+    /* Memberi warna dan ketebalan berbeda pada link yang aktif */
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #00aaff !important; /* Menggunakan warna primer dari komentar Anda */
+        font-weight: 700; /* Membuat teks sedikit lebih tebal */
+    }
+
+    /* Opsi styling lain (pilih salah satu atau gabungkan) */
+    /* Memberi garis bawah pada link yang aktif */
+    /*
+    .navbar-dark .navbar-nav .nav-link.active {
+        color: #ffffff !important;
+        border-bottom: 2px solid #00aaff;
+        padding-bottom: 5px; // Sesuaikan padding agar garis tidak terlalu mepet
+    }
+    */
+    
+
+    /* Responsive (kode Anda yang sudah ada) */
     @media (max-width: 576px) {
         .klik-logo {
             height: 65px;
@@ -56,6 +76,12 @@
 
         .brand-text {
             font-size: 1.3rem;
+        }
+
+        /* Menyesuaikan style aktif di mobile agar lebih jelas */
+        .navbar-dark .navbar-nav .nav-link.active {
+            background-color: rgba(0, 170, 255, 0.1); /* Memberi sedikit latar belakang */
+            border-radius: 5px;
         }
     }
 </style>
