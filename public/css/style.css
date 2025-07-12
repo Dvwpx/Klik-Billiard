@@ -339,11 +339,9 @@ section {
 }
 
 .menu-list-item-v2 .line {
-    flex-grow: 1;
-    border-bottom: 2px dotted #444;
-    margin: 0 1rem;
     position: relative;
-    bottom: 5px;
+    bottom: -25px;
+
 }
 
 .menu-list-item-v2 .price {
