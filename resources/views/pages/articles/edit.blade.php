@@ -69,41 +69,39 @@
 {{-- Script untuk Cloudinary Upload Widget (Sama persis dengan di create.blade.php) --}}
 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const uploadButton = document.getElementById('upload-button');
-    const imageUrlInput = document.getElementById('image-url');
-    const imagePreviewContainer = document.getElementById('image-preview-container');
+ document.addEventListener("DOMContentLoaded", function () {
+        const uploadButton = document.getElementById('upload-button');
+        const imageUrlInput = document.getElementById('image-url');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
 
-    const myWidget = cloudinary.createUploadWidget({
-      cloudName: '{{ config('
-      cloudinary.cloud_name ') }}',
-      uploadPreset: '{{ config('
-      cloudinary.upload_preset ') }}',
-      folder: 'klikbilliard/articles',
-      sources: ['local', 'url', 'camera'],
-      multiple: false,
-      maxFileSize: 10485760 // 10MB
-    }, (error, result) => {
-      if (!error && result && result.event === "success") {
-        console.log('Upload sukses: ', result.info);
-        const imageUrl = result.info.secure_url;
+        const myWidget = cloudinary.createUploadWidget({
+            cloudName: '{{ config('cloudinary.cloud_name') }}',
+            uploadPreset: '{{ config('cloudinary.upload_preset') }}',
+            folder: 'klikbilliard/articles', // Folder di Cloudinary
+            sources: ['local', 'url', 'camera'],
+            multiple: false,
+            maxFileSize: 10485760 // 10MB
+        }, (error, result) => { 
+            if (!error && result && result.event === "success") {
+                console.log('Upload sukses: ', result.info);
+                const imageUrl = result.info.secure_url;
+                
+                // 1. Set nilai input hidden dengan URL gambar
+                imageUrlInput.value = imageUrl;
+                
+                // 2. Tampilkan pratinjau gambar
+                imagePreviewContainer.innerHTML = `<img src="${imageUrl}" style="max-width: 200px; height: auto;">`;
+            }
+        });
 
-        // 1. Set nilai input hidden dengan URL gambar baru
-        imageUrlInput.value = imageUrl;
-
-        // 2. Perbarui pratinjau gambar
-        imagePreviewContainer.innerHTML = `<img src="${imageUrl}" style="max-width: 200px; height: auto;">`;
-      }
+        // Tambahkan event listener ke tombol
+        if (uploadButton) {
+            uploadButton.addEventListener("click", function (e) {
+                e.preventDefault(); // Mencegah form tersubmit jika tombol ada di dalam form
+                myWidget.open();
+            }, false);
+        } else {
+            console.error("Tombol dengan ID 'upload-button' tidak ditemukan!");
+        }
     });
-
-    if (uploadButton) {
-      uploadButton.addEventListener("click", function(e) {
-        e.preventDefault();
-        myWidget.open();
-      }, false);
-    } else {
-      console.error("Tombol dengan ID 'upload-button' tidak ditemukan!");
-    }
-  });
-</script>
 @endsection
