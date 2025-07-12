@@ -33,7 +33,7 @@
 
                 <div class="form-group">
                     <label>Upload Foto Profil</label><br>
-                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload ke Cloudinary</button>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar</button>
                     <input type="hidden" name="profile_image" id="profile_image" value="{{ old('profile_image', $player->profile_image) }}">
 
                     @if($player->profile_image)

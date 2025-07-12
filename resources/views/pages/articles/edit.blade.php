@@ -104,4 +104,4 @@
             console.error("Tombol dengan ID 'upload-button' tidak ditemukan!");
         }
     });
-@endsection
+</script>

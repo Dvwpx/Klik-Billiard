@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                     <label>Upload Poster Turnamen</label><br>
-                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar ke Cloudinary</button>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar</button>
                     <input type="hidden" name="poster_image_url" id="poster_image_url" value="{{ old('poster_image_url', $tournament->poster_image) }}">
 
 

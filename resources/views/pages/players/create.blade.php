@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                     <label>Upload Foto Profil</label><br>
-                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload ke Cloudinary</button>
+                    <button type="button" id="upload_widget" class="btn btn-primary mb-2">Upload Gambar</button>
                     <input type="hidden" name="profile_image" id="profile_image" value="{{ old('profile_image') }}">
                     <div id="preview_image" style="display: none;">
                         <img src="" id="image_preview_tag" style="max-width: 150px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">

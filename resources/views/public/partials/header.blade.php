@@ -16,7 +16,7 @@
                 <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('lokasi') ? 'active' : '' }}" href="/lokasi">Lokasi</a></li>
                 <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('fasilitas') ? 'active' : '' }}" href="/fasilitas">Fasilitas</a></li>
                 <li class="nav-item"><a class="nav-link smooth-scroll {{ Request::is('menu') ? 'active' : '' }}" href="/menu">Menu F&B</a></li>
-                <li class="nav-item"><a class="nav-link {{ Request::is('tournaments*') ? 'active' : '' }}" href="{{ route('tournaments.public.index') }}">Turnamen</a></li>
+                <li class="nav-item"><a class="nav-link {{ Request::is('turnamen*') ? 'active' : '' }}" href="{{ route('tournaments.public.index') }}">Turnamen</a></li>
                 <li class="nav-item"><a class="nav-link {{ Request::is('blog*') ? 'active' : '' }}" href="{{ route('blog.index') }}">News</a></li>
             </ul>
         </div>

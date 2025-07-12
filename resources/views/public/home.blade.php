@@ -502,6 +502,7 @@
     }
 }
 
+/* lokasi */
 @media (max-width: 576px) {
     .location-info-side .subtitle {
        font-size: 1rem; /* Contoh untuk gambar yang lebih tinggi di mobile */
